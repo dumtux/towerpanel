@@ -1,5 +1,5 @@
 <script>
-  import towerLogo from './assets/tower.png'
+  import towerLogo from '/public/tower.png'
   import Counter from './lib/Counter.svelte'
 </script>
 
