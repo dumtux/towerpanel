@@ -21,7 +21,7 @@ html = """
         <ul id='messages'>
         </ul>
         <script>
-            var ws = new WebSocket("ws://localhost:8000/ws");
+            var ws = new WebSocket(location.origin.replace(/^http/, 'ws') + "/ws");
             ws.onmessage = function(event) {
                 var messages = document.getElementById('messages')
                 var message = document.createElement('li')
@@ -52,7 +52,7 @@ async def get():
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    uart_rx, uart_tx = await serial_asyncio.open_serial_connection(url='./ttyOmega', baudrate=115200)
+    uart_rx, uart_tx = await serial_asyncio.open_serial_connection(url='/dev/ttyUSB1', baudrate=115200)
 
     async def read_from_socket(websocket: WebSocket):
         while True:
