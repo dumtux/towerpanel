@@ -6,10 +6,10 @@ Sponsored by [TowerSoftware](http://www.towersoftwareltd.com/)
 ## Experimental Running
 
 Open 1st terminal.
-This command will create two psudo serial port devices - `./ttySensor` and `./ttyOmega` connected together.
+This command will create two psudo serial port devices, `./ttySensor` and `./ttyOmega` connected together.
 
 ```
-socat -d -d -v pty,rawer,echo=0,link=./reader pty,rawer,echo=0,link=./writer
+socat -d -d -v pty,rawer,echo=0,link=./ttySensor pty,rawer,echo=0,link=./ttyWriter
 ```
 
 Run in 2nd terminal
