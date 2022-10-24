@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Divider } from '$lib';
+	import { Divider } from '@brainandbones/skeleton';
 </script>
 
 <div class="page-container">

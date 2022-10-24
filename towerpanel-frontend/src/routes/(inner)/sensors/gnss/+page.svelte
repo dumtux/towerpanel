@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { storeFramework } from '$panel/stores';
-	import { Divider, TabGroup, Tab } from '$lib';
+	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
 	import CodeBlock from '@brainandbones/skeleton/utilities/CodeBlock/CodeBlock.svelte';
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 	import ListBox from '@brainandbones/skeleton/components/ListBox/ListBox.svelte';

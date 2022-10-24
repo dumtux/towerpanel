@@ -15,7 +15,7 @@
 	import { storePreview } from '$panel/PanelThemer/stores';
 
 	// Components & Utilities
-	import AppShell from '$lib/components/AppShell/AppShell.svelte';
+	import AppShell from '@brainandbones/skeleton/components/AppShell/AppShell.svelte';
 	import Dialog from '@brainandbones/skeleton/utilities/Dialog/Dialog.svelte';
 	import Toast from '@brainandbones/skeleton/utilities/Toast/Toast.svelte';
 

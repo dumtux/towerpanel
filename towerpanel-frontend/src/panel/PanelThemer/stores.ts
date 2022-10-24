@@ -1,7 +1,7 @@
 import { get, type Writable } from 'svelte/store';
-import { localStorageStore } from '$lib/utilities/LocalStorageStore/LocalStorageStore';
+import { localStorageStore } from '@brainandbones/skeleton/utilities/LocalStorageStore/LocalStorageStore';
 import { genHexPalette, getTailwindColor } from './utils';
-import type { SemanticNames, TailwindColorObject } from '$lib/tailwind/colors';
+import type { SemanticNames, TailwindColorObject } from '@brainandbones/skeleton/tailwind/colors';
 
 // Mode - T: Tailwind | F: Custom
 export const storeMode: Writable<boolean> = localStorageStore('storeMode', true);

@@ -45,7 +45,7 @@
 		types: [],
 		stylesheetIncludes: [],
 		stylesheets: [],
-		package: { name: '$lib', url: 'https://www.npmjs.com/package/$lib' },
+		package: { name: '@brainandbones/skeleton', url: 'https://www.npmjs.com/package/@brainandbones/skeleton' },
 		source: '',
 		docs: $page.url.pathname,
 		dependencies: [],
