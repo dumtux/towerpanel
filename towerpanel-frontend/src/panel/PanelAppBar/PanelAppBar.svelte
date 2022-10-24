@@ -3,12 +3,12 @@
 	const pkg = __PACKAGE__;
 
 	// Components
-	import AppBar from '$lib/components/AppBar/AppBar.svelte';
-	import Divider from '$lib/components/Divider/Divider.svelte';
-	import SvgIcon from '$lib/components/SvgIcon/SvgIcon.svelte';
+	import AppBar from '@brainandbones/skeleton/components/AppBar/AppBar.svelte';
+	import Divider from '@brainandbones/skeleton/components/Divider/Divider.svelte';
+	import SvgIcon from '@brainandbones/skeleton/components/SvgIcon/SvgIcon.svelte';
 	// Utilities
-	import LightSwitch from '$lib/utilities/LightSwitch/LightSwitch.svelte';
-	import { menu } from '$lib/utilities/Menu/menu';
+	import LightSwitch from '@brainandbones/skeleton/utilities/LightSwitch/LightSwitch.svelte';
+	import { menu } from '@brainandbones/skeleton/utilities/Menu/menu';
 
 	// Stores
 	import { storeTheme, storeMobileDrawer } from '$panel/stores';

@@ -1,8 +1,8 @@
 <!-- Layout: (root) -->
 <script lang="ts">
 	import hljs from 'highlight.js';
-	import '$lib/styles/highlight-js.css'; // was: 'highlight.js/styles/github-dark.css';
-	import { storeHighlightJs } from '$lib/utilities/CodeBlock/stores';
+	import '@brainandbones/skeleton/styles/highlight-js.css'; // was: 'highlight.js/styles/github-dark.css';
+	import { storeHighlightJs } from '@brainandbones/skeleton/utilities/CodeBlock/stores';
 	storeHighlightJs.set(hljs);
 
 	// SvelteKit Imports
@@ -16,8 +16,8 @@
 
 	// Components & Utilities
 	import AppShell from '$lib/components/AppShell/AppShell.svelte';
-	import Dialog from '$lib/utilities/Dialog/Dialog.svelte';
-	import Toast from '$lib/utilities/Toast/Toast.svelte';
+	import Dialog from '@brainandbones/skeleton/utilities/Dialog/Dialog.svelte';
+	import Toast from '@brainandbones/skeleton/utilities/Toast/Toast.svelte';
 
 	// Docs Components
 	import DocsAppBar from '$panel/PanelAppBar/PanelAppBar.svelte';
@@ -27,22 +27,22 @@
 
 	// Themes
 	// https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page
-	import rocket from '$lib/themes/theme-rocket.css?inline';
-	import modern from '$lib/themes/theme-modern.css?inline';
-	import seafoam from '$lib/themes/theme-seafoam.css?inline';
-	import vintage from '$lib/themes/theme-vintage.css?inline';
-	import sahara from '$lib/themes/theme-sahara.css?inline';
-	import seasonal from '$lib/themes/theme-seasonal.css?inline';
+	import rocket from '@brainandbones/skeleton/themes/theme-rocket.css?inline';
+	import modern from '@brainandbones/skeleton/themes/theme-modern.css?inline';
+	import seafoam from '@brainandbones/skeleton/themes/theme-seafoam.css?inline';
+	import vintage from '@brainandbones/skeleton/themes/theme-vintage.css?inline';
+	import sahara from '@brainandbones/skeleton/themes/theme-sahara.css?inline';
+	// import seasonal from '$lib/themes/theme-seasonal.css?inline';
 
 	// Default Theme, injected immediately:
-	import skeleton from '$lib/themes/theme-skeleton.css';
+	import skeleton from '@brainandbones/skeleton/themes/theme-skeleton.css';
 	// Skeleton Stylesheets
-	import '$lib/styles/all.css';
+	import '@brainandbones/skeleton/styles/all.css';
 	// Global Stylesheets
 	import '../app.postcss';
 
 	// List of Themes
-	const themes: any = { skeleton, rocket, modern, seafoam, vintage, sahara, seasonal };
+	const themes: any = { skeleton, rocket, modern, seafoam, vintage, sahara };
 
 	// Set body `data-theme` based on current theme status
 	storeTheme.subscribe(setBodyThemeAttribute);

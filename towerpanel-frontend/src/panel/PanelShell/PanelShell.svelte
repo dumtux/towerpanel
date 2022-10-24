@@ -6,12 +6,12 @@
 	import { PanelFeature, type PanelShellSettings, type PanelShellTable } from '$panel/PanelShell/types';
 
 	// Components
-	import DataTable from '$lib/components/Table/DataTable.svelte';
-	import SvgIcon from '$lib/components/SvgIcon/SvgIcon.svelte';
-	import Tab from '$lib/components/Tab/Tab.svelte';
-	import TabGroup from '$lib/components/Tab/TabGroup.svelte';
+	import DataTable from '@brainandbones/skeleton/components/Table/DataTable.svelte';
+	import SvgIcon from '@brainandbones/skeleton/components/SvgIcon/SvgIcon.svelte';
+	import Tab from '@brainandbones/skeleton/components/Tab/Tab.svelte';
+	import TabGroup from '@brainandbones/skeleton/components/Tab/TabGroup.svelte';
 	// Utilities
-	import { toastStore, type ToastMessage } from '$lib/utilities/Toast/stores';
+	import { toastStore, type ToastMessage } from '@brainandbones/skeleton/utilities/Toast/stores';
 
 	// Props
 	export let settings: PanelShellSettings;

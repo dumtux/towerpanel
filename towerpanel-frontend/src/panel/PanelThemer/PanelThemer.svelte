@@ -2,15 +2,15 @@
 	import { onDestroy } from 'svelte';
 
 	import Swatches from './Swatches.svelte';
-	import Alert from '$lib/components/Alert/Alert.svelte';
-	import RadioGroup from '$lib/components/Radio/RadioGroup.svelte';
-	import RadioItem from '$lib/components/Radio/RadioItem.svelte';
-	import LightSwitch from '$lib/utilities/LightSwitch/LightSwitch.svelte';
-	import SlideToggle from '$lib/components/SlideToggle/SlideToggle.svelte';
-	import CodeBlock from '$lib/utilities/CodeBlock/CodeBlock.svelte';
+	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
+	import RadioGroup from '@brainandbones/skeleton/components/Radio/RadioGroup.svelte';
+	import RadioItem from '@brainandbones/skeleton/components/Radio/RadioItem.svelte';
+	import LightSwitch from '@brainandbones/skeleton/utilities/LightSwitch/LightSwitch.svelte';
+	import SlideToggle from '@brainandbones/skeleton/components/SlideToggle/SlideToggle.svelte';
+	import CodeBlock from '@brainandbones/skeleton/utilities/CodeBlock/CodeBlock.svelte';
 
 	// Helpers
-	import { semanticNames, tailwindDefaultColors } from '$lib/tailwind/colors';
+	import { semanticNames, tailwindDefaultColors } from '@brainandbones/skeleton/tailwind/colors';
 	import { storeMode, storePreview, storeTailwindForm, storeTailwindPalette, storeHexForm, storeHexPalette, storeFormData } from '$panel/PanelThemer/stores';
 	import { resetSettings, onTailwindSelect, onRandomize, onHexInput, genCssColorStrings } from '$panel/PanelThemer/utils';
 	import { fonts } from '$panel/PanelThemer/fonts';

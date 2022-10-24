@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { storeFramework } from '$panel/stores';
 	import { Divider, TabGroup, Tab } from '$lib';
-	import CodeBlock from '$lib/utilities/CodeBlock/CodeBlock.svelte';
-	import Alert from '$lib/components/Alert/Alert.svelte';
-	import ListBox from '$lib/components/ListBox/ListBox.svelte';
-	import ListBoxItem from '$lib/components/ListBox/ListBoxItem.svelte';
+	import CodeBlock from '@brainandbones/skeleton/utilities/CodeBlock/CodeBlock.svelte';
+	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
+	import ListBox from '@brainandbones/skeleton/components/ListBox/ListBox.svelte';
+	import ListBoxItem from '@brainandbones/skeleton/components/ListBox/ListBoxItem.svelte';
 	import { writable, type Writable } from "svelte/store";
-	import SlideToggle from '$lib/components/SlideToggle/SlideToggle.svelte';
+	import SlideToggle from '@brainandbones/skeleton/components/SlideToggle/SlideToggle.svelte';
 
 	const TERMINAL_MAX_ROWS = 10;
 	const GNSS_DEFAULT_BAUDRATE = 19200;

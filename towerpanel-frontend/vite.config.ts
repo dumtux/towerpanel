@@ -17,7 +17,7 @@ const config = {
 	},
 	resolve: {
 		alias: {
-			'@brainandbones/skeleton': path.resolve('./src/lib/index.ts'),
+			// '@brainandbones/skeleton': path.resolve('./src/lib/index.ts'),
 			$panel: path.resolve('./src/panel')
 		}
 	},

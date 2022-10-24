@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Divider from '$lib/components/Divider/Divider.svelte';
-	import SvgIcon from '$lib/components/SvgIcon/SvgIcon.svelte';
+	import Divider from '@brainandbones/skeleton/components/Divider/Divider.svelte';
+	import SvgIcon from '@brainandbones/skeleton/components/SvgIcon/SvgIcon.svelte';
 
 	// Base Classes
 	const cBase: string = 'bg-white/20 dark:bg-black/10 text-xs md:text-base mx-auto px-4 py-8 md:p-10 space-y-10';

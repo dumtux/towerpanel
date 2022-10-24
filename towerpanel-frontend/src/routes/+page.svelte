@@ -1,8 +1,8 @@
 <script lang="ts">
 	// Components
-	import Alert from '$lib/components/Alert/Alert.svelte';
-	import Avatar from '$lib/components/Avatar/Avatar.svelte';
-	import SvgIcon from '$lib/components/SvgIcon/SvgIcon.svelte';
+	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
+	import Avatar from '@brainandbones/skeleton/components/Avatar/Avatar.svelte';
+	import SvgIcon from '@brainandbones/skeleton/components/SvgIcon/SvgIcon.svelte';
 </script>
 
 <div>
