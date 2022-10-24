@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { storeFramework } from '$docs/stores';
+	import { storeFramework } from '$panel/stores';
 	import { Divider, TabGroup, Tab } from '$lib';
 	import CodeBlock from '$lib/utilities/CodeBlock/CodeBlock.svelte';
 	import Alert from '$lib/components/Alert/Alert.svelte';

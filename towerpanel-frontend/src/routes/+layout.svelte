@@ -11,8 +11,8 @@
 	import { afterNavigate } from '$app/navigation';
 
 	// Stores
-	import { storeCurrentUrl, storeTheme } from '$docs/stores';
-	import { storePreview } from '$docs/DocsThemer/stores';
+	import { storeCurrentUrl, storeTheme } from '$panel/stores';
+	import { storePreview } from '$panel/PanelThemer/stores';
 
 	// Components & Utilities
 	import AppShell from '$lib/components/AppShell/AppShell.svelte';
@@ -20,10 +20,10 @@
 	import Toast from '$lib/utilities/Toast/Toast.svelte';
 
 	// Docs Components
-	import DocsAppBar from '$docs/DocsAppBar/DocsAppBar.svelte';
-	import DocsSidebar from '$docs/DocsNavigation/DocsSidebar.svelte';
-	import DocsDrawer from '$docs/DocsNavigation/DocsDrawer.svelte';
-	import DocsFooter from '$docs/DocsFooter/DocsFooter.svelte';
+	import DocsAppBar from '$panel/PanelAppBar/PanelAppBar.svelte';
+	import DocsSidebar from '$panel/PanelNavigation/PanelSidebar.svelte';
+	import DocsDrawer from '$panel/PanelNavigation/PanelDrawer.svelte';
+	import DocsFooter from '$panel/PanelFooter/PanelFooter.svelte';
 
 	// Themes
 	// https://vitejs.dev/guide/features.html#disabling-css-injection-into-the-page

@@ -11,7 +11,7 @@
 	import { menu } from '$lib/utilities/Menu/menu';
 
 	// Stores
-	import { storeTheme, storeMobileDrawer } from '$docs/stores';
+	import { storeTheme, storeMobileDrawer } from '$panel/stores';
 
 	// Drawer Handler
 	function drawerOpen(): void {

@@ -1,18 +1,18 @@
-export enum DocsFeature {
+export enum PanelFeature {
 	Element = 'Tailwind Element',
 	Component = 'Svelte Component',
 	Action = 'Svelte Action',
 	Utility = 'Utility'
 }
 
-interface DocShellLinks {
+interface PanelShellLinks {
 	label: string;
 	url: string;
 }
 
-export interface DocsShellSettings {
+export interface PanelShellSettings {
 	/** Enum: Documentation | Element | Component | Action | Utility */
-	feature: DocsFeature;
+	feature: PanelFeature;
 	/** The feature name. */
 	name: string;
 	/** The feature description */
@@ -37,12 +37,12 @@ export interface DocsShellSettings {
 	/** Provide the GitHub documentation route path (partial) */
 	docs?: string;
 	/** Provide list of depedency links.  */
-	dependencies?: DocShellLinks[];
+	dependencies?: PanelShellLinks[];
 	/** When enabled, renames tab "Props" to "Params" for Svelte Actions */
 	parameters?: boolean;
 }
 
-export interface DocsShellTable {
+export interface PanelShellTable {
 	/** Provide a semantic label. */
 	label?: string;
 	/** Provide HTML for description region. */

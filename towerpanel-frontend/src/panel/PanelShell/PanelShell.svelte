@@ -3,7 +3,7 @@
 	import { writable, type Writable } from 'svelte/store';
 
 	// Types
-	import { DocsFeature, type DocsShellSettings, type DocsShellTable } from '$docs/DocsShell/types';
+	import { PanelFeature, type PanelShellSettings, type PanelShellTable } from '$panel/PanelShell/types';
 
 	// Components
 	import DataTable from '$lib/components/Table/DataTable.svelte';
@@ -14,12 +14,12 @@
 	import { toastStore, type ToastMessage } from '$lib/utilities/Toast/stores';
 
 	// Props
-	export let settings: DocsShellSettings;
-	export let properties: DocsShellTable[] | undefined = undefined;
-	export let events: DocsShellTable[] | undefined = undefined;
-	export let classes: DocsShellTable[] | undefined = undefined;
-	export let slots: DocsShellTable[] | undefined = undefined;
-	export let a11y: DocsShellTable[] | undefined = undefined;
+	export let settings: PanelShellSettings;
+	export let properties: PanelShellTable[] | undefined = undefined;
+	export let events: PanelShellTable[] | undefined = undefined;
+	export let classes: PanelShellTable[] | undefined = undefined;
+	export let slots: PanelShellTable[] | undefined = undefined;
+	export let a11y: PanelShellTable[] | undefined = undefined;
 	// Props (styles)
 	export let spacing: string = 'space-y-8';
 	// Props (regions)
@@ -35,9 +35,9 @@
 
 	// Local
 	const githubSourcePath: string = 'https://github.com/Brain-Bones/skeleton/tree/master/src'; // FIXME: hardcoded path
-	const defaultSettings: DocsShellSettings = {
+	const defaultSettings: PanelShellSettings = {
 		// Intro
-		feature: DocsFeature.Component,
+		feature: PanelFeature.Component,
 		name: '(name)',
 		description: '(description)',
 		// Details
@@ -52,10 +52,10 @@
 		// Extras
 		parameters: false
 	};
-	const pageSettings: DocsShellSettings = { ...defaultSettings, ...settings };
+	const pageSettings: PanelShellSettings = { ...defaultSettings, ...settings };
 
 	function setFeatureIcon(): string {
-		const index: number = Object.values(DocsFeature).indexOf(pageSettings.feature);
+		const index: number = Object.values(PanelFeature).indexOf(pageSettings.feature);
 		// prettier-ignore
 		switch(index) {
 			case(0): return 'tailwind'; // Element
