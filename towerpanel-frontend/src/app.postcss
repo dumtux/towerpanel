@@ -1,0 +1,31 @@
+@tailwind base;
+
+/* Reference: https://skeleton.brainandbonesllc.com/guides/styling */
+
+html,
+body {
+	@apply h-full overflow-hidden;
+}
+
+/* Page Styles */
+.page-container {
+	@apply container mx-auto p-4 md:p-12 space-y-8;
+}
+
+/*
+Global overrides to buttons styles, provided by:
+https://skeleton.brainandbonesllc.com/tailwind/buttons
+*/
+.btn,
+.btn-icon {
+	@apply font-bold;
+}
+.btn-filled-primary,
+.btn-filled-accent,
+.btn-filled-ternary,
+.btn-filled-warning,
+.btn-filled-surface {
+	@apply text-white;
+}
+@tailwind components;
+@tailwind utilities;
