@@ -2,7 +2,7 @@
 	// Components
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 	import Avatar from '@brainandbones/skeleton/components/Avatar/Avatar.svelte';
-	import SvgIcon from '@brainandbones/skeleton/components/SvgIcon/SvgIcon.svelte';
+	import SvgIcon from '$lib/components/SvgIcon/SvgIcon.svelte';
 </script>
 
 <div>
@@ -43,14 +43,14 @@
 			</div>
 			<div class="card card-body space-y-4">
 				<div class="bg-primary-500 w-14 aspect-square flex justify-center items-center rounded-token shadow">
-					<SvgIcon name="swatchbook" fill="fill-white" width="w-8" height="h-8" />
+					<SvgIcon name="connectivity" fill="fill-white" width="w-8" height="h-8" />
 				</div>
 				<h4>Connectivity</h4>
 				<p>Supports Ethernet, Wi-Fi, LTE and UHF for establishing the most reliable Internet connection ever.</p>
 			</div>
 			<div class="card card-body space-y-4">
 				<div class="bg-orange-500 w-14 aspect-square flex justify-center items-center rounded-token shadow">
-					<SvgIcon name="screwdriver" fill="fill-white" width="w-10" height="h-10" />
+					<SvgIcon name="openwrt" fill="fill-white" width="w-10" height="h-10" />
 				</div>
 				<h4>OpenWrt</h4>
 				<p>
@@ -60,7 +60,7 @@
 			</div>
 			<div class="card card-body space-y-4">
 				<div class="bg-sky-500 w-14 aspect-square flex justify-center items-center rounded-token shadow">
-					<SvgIcon name="screwdriver" fill="fill-white" width="w-10" height="h-10" />
+					<SvgIcon name="python" fill="fill-white" width="w-10" height="h-10" />
 				</div>
 				<h4>Concurrent Python</h4>
 				<p>Everything under thingle-threaded Python, asynchronous non-blocking hardware I/O operations.</p>
