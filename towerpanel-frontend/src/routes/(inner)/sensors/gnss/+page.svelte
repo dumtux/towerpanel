@@ -2,11 +2,8 @@
 	import { storeFramework } from '$panel/stores';
 	import { writable, type Writable } from "svelte/store";
 	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
-	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 	import ListBox from '@brainandbones/skeleton/components/ListBox/ListBox.svelte';
 	import ListBoxItem from '@brainandbones/skeleton/components/ListBox/ListBoxItem.svelte';
-	import SlideToggle from '@brainandbones/skeleton/components/SlideToggle/SlideToggle.svelte';
-	import CodeBlock from '$lib/utilities/CodeBlock/FixedHeightCodeBlock.svelte';
 
 	const CONSOLE_ROWS = 16;
 	const GNSS_DEFAULT_BAUDRATE = 19200;
@@ -33,6 +30,7 @@
 		if (console_buffer.length > CONSOLE_ROWS) {
 			console_buffer.shift();
 		}
+		console_buffer[0] = " ";
 		console_text = console_buffer.join('\n');
 	}
 
@@ -51,6 +49,7 @@
 		if (console_buffer.length > CONSOLE_ROWS) {
 			console_buffer.shift();
 		}
+		console_buffer[0] = " ";
 		console_text = console_buffer.join('\n');
     });
 </script>
@@ -67,10 +66,11 @@
 		{#if $storeFramework === 'uart'}
 			<section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 				<div class="card card-body space-y-4">
-					<CodeBlock
+					<pre><code style="min-height: 28em; white-space: pre; word-break: normal; word-wrap: normal;">{console_text}</code></pre>
+					<!-- <CodeBlock
 						language="plaintext"
 						code="{console_text}"
-					/>
+					/> -->
 					<label for="gnss_command">
 						<input type="text" id="gnss_command" bind:value={gnss_command} on:change={sendCommand} minlength="2" required placeholder="Type command and hit Enter to send.">
 					</label>

@@ -87,10 +87,6 @@
 							<span>🦴</span>
 							<span>Skeleton</span>
 						</li>
-						<li class="option" class:!bg-primary-500={$storeTheme === 'modern'} on:click={() => { storeTheme.set('modern') }}>
-							<span>🤖</span>
-							<span>Modern</span>
-						</li>
 						<li class="option" class:!bg-primary-500={$storeTheme === 'rocket'} on:click={() => { storeTheme.set('rocket') }}> 
 							<span>🚀</span>
 							<span>Rocket</span>
@@ -103,18 +99,8 @@
 							<span>📺</span>
 							<span>Vintage</span>
 						</li>
-						<li class="option" class:!bg-primary-500={$storeTheme === 'sahara'} on:click={() => { storeTheme.set('sahara') }}>
-							<span>🏜️</span>
-							<span>Sahara</span>
-						</li>
-						<!-- <li class="option" class:!bg-primary-500={$storeTheme === 'seasonal'} on:click={() => { storeTheme.set('seasonal') }}>
-							<span>🎃</span>
-							<span>Seasonal</span>
-						</li> -->
 					</ul>
 				</nav>
-				<hr>
-				<a class="btn btn-ghost w-full" href="/guides/themes/generator">Theme Generator</a>
 			</div>
 		</div>
 
