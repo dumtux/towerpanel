@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { storeFramework } from '$panel/stores';
 	import { writable, type Writable } from "svelte/store";
 	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
 	import ListBox from '@brainandbones/skeleton/components/ListBox/ListBox.svelte';
@@ -58,52 +57,32 @@
 	<!-- Install -->
 	<section class="space-y-4">
 		<!-- <h1>GNSS</h1> -->
-		<!-- Tabs -->
-		<TabGroup selected={storeFramework}>
-			<Tab value="uart">Console</Tab>
-			<Tab value="webui">WebUI</Tab>
-		</TabGroup>
-		{#if $storeFramework === 'uart'}
+		<section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+			<div class="card card-body space-y-4">
+				<pre><code style="min-height: 28em; white-space: pre; word-break: normal; word-wrap: normal;">{console_text}</code></pre>
+				<label for="gnss_command">
+					<input type="text" id="gnss_command" bind:value={gnss_command} on:change={sendCommand} minlength="2" required placeholder="Type command and hit Enter to send.">
+				</label>
+			</div>
 			<section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
 				<div class="card card-body space-y-4">
-					<pre><code style="min-height: 28em; white-space: pre; word-break: normal; word-wrap: normal;">{console_text}</code></pre>
-					<!-- <CodeBlock
-						language="plaintext"
-						code="{console_text}"
-					/> -->
-					<label for="gnss_command">
-						<input type="text" id="gnss_command" bind:value={gnss_command} on:change={sendCommand} minlength="2" required placeholder="Type command and hit Enter to send.">
-					</label>
+					<ListBox selected="{baudrate}" label="Baudrate">
+						<ListBoxItem value={4800}>4800 bps</ListBoxItem>
+						<ListBoxItem value={9600}>9600 bps</ListBoxItem>
+						<ListBoxItem value={14400}>14400 bps</ListBoxItem>
+						<ListBoxItem value={19200}>19200 bps</ListBoxItem>
+						<ListBoxItem value={38400}>38400 bps</ListBoxItem>
+						<ListBoxItem value={57600}>57600 bps</ListBoxItem>
+						<ListBoxItem value={115200}>115200 bps</ListBoxItem>
+					</ListBox>
 				</div>
-				<section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-					<div class="card card-body space-y-4">
-						<ListBox selected="{baudrate}" label="Baudrate">
-							<ListBoxItem value={4800}>4800 bps</ListBoxItem>
-							<ListBoxItem value={9600}>9600 bps</ListBoxItem>
-							<ListBoxItem value={14400}>14400 bps</ListBoxItem>
-							<ListBoxItem value={19200}>19200 bps</ListBoxItem>
-							<ListBoxItem value={38400}>38400 bps</ListBoxItem>
-							<ListBoxItem value={57600}>57600 bps</ListBoxItem>
-							<ListBoxItem value={115200}>115200 bps</ListBoxItem>
-						</ListBox>
-					</div>
-					<div class="card card-body space-y-4">
-						<p>(quick controls)</p>
-					</div>
-				</section>
+				<div class="card card-body space-y-4">
+					<p>(quick controls)</p>
+				</div>
 			</section>
-		{:else if $storeFramework === 'webui'}
-			<iframe class="tower-webui" src="http://192.168.0.25/index.cgi"></iframe>
-		{/if}
+		</section>
 	</section>
 
 	<Divider />
 
 </div>
-
-<style>
-	iframe.tower-webui {
-		width: 100%;
-		height: 50em;
-	}
-</style>
