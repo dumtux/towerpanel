@@ -46,27 +46,6 @@
 
 	<!-- Navigation -->
 	<svelte:fragment slot="trail">
-		<!-- Links -->
-		<!-- prettier-ignore -->
-		<section class="hidden lg:flex space-x-1">
-			<a class="btn btn-sm" href="/sensors/gnss" on:click={() => { scrollSidebarTo('#nav-guides'); }}>Workspace</a>
-			<div class="relative">
-				<button class="btn btn-sm space-x-1" use:menu={{ menu: 'pages' }}>
-					<span>Pages</span>
-					<span class="opacity-50">▾</span>
-				</button>
-				<nav class="list-nav card card-body w-56 shadow-xl space-y-4" data-menu="pages">
-					<ul>
-						<li><a href="/sensors/rs232" on:click={() => { scrollSidebarTo('#nav-components'); }}>RS232</a></li>
-						<li><a href="/sensors/rs485" on:click={() => { scrollSidebarTo('#nav-actions'); }}>RS485</a></li>
-						<li><a href="/sensors/can" on:click={() => { scrollSidebarTo('#nav-utilities'); }}>CAN</a></li>
-					</ul>
-				</nav>
-			</div>
-		</section>
-
-		<Divider vertical borderWidth="hidden lg:block border-l-2" />
-
 		<!-- Theme -->
 		<!-- prettier-ignore -->
 		<div class="relative">
