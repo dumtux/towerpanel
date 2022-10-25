@@ -3,7 +3,7 @@ import serial_asyncio
 
 
 async def main(loop):
-    reader, writer = await serial_asyncio.open_serial_connection(url='/dev/ttyUSB1', baudrate=115200)
+    reader, writer = await serial_asyncio.open_serial_connection(url='./ttySensor', baudrate=115200)
     print('Writer opened')
     messages = [
         b'TEMP,25,01\n',

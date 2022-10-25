@@ -15,37 +15,27 @@
 		console_buffer.push("_");
 	}
 
+	const textEncoder = new TextEncoder();
+	const textDecoder = new TextDecoder();
+
 	const baudrate: Writable<number> = writable(GNSS_DEFAULT_BAUDRATE);
 	let gnss_command = "";
 
-	const ws = new WebSocket("ws://192.168.0.6:8000/ws");
+	const ws = new WebSocket("ws://localhost:8000/ws/test");
 
 	function sendCommand() {
 		console_buffer.push('Vega28 ◄◄ ' + gnss_command);
-		const json_tx = {
-			"gnss_tx": gnss_command + '\r\n'
-		}
-		ws.send(JSON.stringify(json_tx));
+		ws.send(JSON.stringify(Array.from(textEncoder.encode(gnss_command + '\r\n'))));
 		gnss_command = "";
 		if (console_buffer.length > CONSOLE_ROWS) {
 			console_buffer.shift();
 		}
-		console_buffer[0] = " ";
 		console_text = console_buffer.join('\n');
 	}
 
 	ws.addEventListener("message", function (event) {
-		const json_rx = JSON.parse(event.data);
-		if (json_rx["gnss_rx_type"] == "string") {
-			console_buffer.push('Vega28 ►► ' + json_rx["gnss_rx"].replace("\r\n", ""));
-			alert_decoding_visible = false;
-		} else if (json_rx["gnss_rx_type"] == "bytes") {
-			console_buffer.push('Vega28 ►► ' + json_rx["gnss_rx"].slice(2, json_rx["gnss_rx"].length-1));
-			alert_decoding_visible = true;
-		} else {
-			console_buffer.push('Vega28 ►► ' + json_rx["gnss_rx"]);
-			alert_decoding_visible = true;
-		}
+		const received_str = textDecoder.decode(new Uint8Array(JSON.parse(event.data)));
+		console_buffer.push('Vega28 ►► ' + received_str.replace("\r", "\\r").replace("\n", "\\n"));
 		if (console_buffer.length > CONSOLE_ROWS) {
 			console_buffer.shift();
 		}
