@@ -16,10 +16,6 @@
 	const rx_buffer: List<string> = [];
 	let upstream_data = " ";
 	const tx_buffer: List<string> = [];
-	for (let i = 0; i < TERMINAL_MAX_ROWS; i++) {
-		rx_buffer.push(" \n");
-		tx_buffer.push(" \n");
-	}
 
 	const baudrate: Writable<number> = writable(GNSS_DEFAULT_BAUDRATE);
 	let gnss_command = "";
