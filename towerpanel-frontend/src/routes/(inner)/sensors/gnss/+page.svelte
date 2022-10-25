@@ -3,6 +3,7 @@
 	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
 	import ListBox from '@brainandbones/skeleton/components/ListBox/ListBox.svelte';
 	import ListBoxItem from '@brainandbones/skeleton/components/ListBox/ListBoxItem.svelte';
+	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 
 	const CONSOLE_ROWS = 16;
 	const GNSS_DEFAULT_BAUDRATE = 19200;
@@ -57,29 +58,27 @@
 	<!-- Install -->
 	<section class="space-y-4">
 		<!-- <h1>GNSS</h1> -->
-		<section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-			<div class="card card-body space-y-4">
+			<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_decoding_visible}>
+				<span>Failing to decode some bytes. Raw bytes data are shown. Try different baudrate.</span>
+			</Alert>
+			<section class="grid grid-cols-5 gap-4">
+			<div class="col-span-4 card card-body space-y-4">
 				<pre><code style="min-height: 28em; white-space: pre; word-break: normal; word-wrap: normal;">{console_text}</code></pre>
 				<label for="gnss_command">
 					<input type="text" id="gnss_command" bind:value={gnss_command} on:change={sendCommand} minlength="2" required placeholder="Type command and hit Enter to send.">
 				</label>
 			</div>
-			<section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-				<div class="card card-body space-y-4">
-					<ListBox selected="{baudrate}" label="Baudrate">
-						<ListBoxItem value={4800}>4800 bps</ListBoxItem>
-						<ListBoxItem value={9600}>9600 bps</ListBoxItem>
-						<ListBoxItem value={14400}>14400 bps</ListBoxItem>
-						<ListBoxItem value={19200}>19200 bps</ListBoxItem>
-						<ListBoxItem value={38400}>38400 bps</ListBoxItem>
-						<ListBoxItem value={57600}>57600 bps</ListBoxItem>
-						<ListBoxItem value={115200}>115200 bps</ListBoxItem>
-					</ListBox>
-				</div>
-				<div class="card card-body space-y-4">
-					<p>(quick controls)</p>
-				</div>
-			</section>
+			<div class="card card-body space-y-4">
+				<ListBox selected="{baudrate}" label="Baudrate">
+					<ListBoxItem value={4800}>4800 bps</ListBoxItem>
+					<ListBoxItem value={9600}>9600 bps</ListBoxItem>
+					<ListBoxItem value={14400}>14400 bps</ListBoxItem>
+					<ListBoxItem value={19200}>19200 bps</ListBoxItem>
+					<ListBoxItem value={38400}>38400 bps</ListBoxItem>
+					<ListBoxItem value={57600}>57600 bps</ListBoxItem>
+					<ListBoxItem value={115200}>115200 bps</ListBoxItem>
+				</ListBox>
+			</div>
 		</section>
 	</section>
 
