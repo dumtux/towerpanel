@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment';
 	import { storeCurrentUrl, storeMobileDrawer } from '$panel/stores';
-	import SvgIcon from '@brainandbones/skeleton/components/SvgIcon/SvgIcon.svelte';
+	import SvgIcon from '$lib/components/SvgIcon/SvgIcon.svelte';
 	import { menuNavLinks } from './links';
 
 	// Props
