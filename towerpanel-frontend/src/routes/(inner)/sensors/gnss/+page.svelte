@@ -1,19 +1,25 @@
 <script lang="ts">
 	import { storeFramework } from '$panel/stores';
 	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
-	import CodeBlock from '@brainandbones/skeleton/utilities/CodeBlock/CodeBlock.svelte';
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 	import ListBox from '@brainandbones/skeleton/components/ListBox/ListBox.svelte';
 	import ListBoxItem from '@brainandbones/skeleton/components/ListBox/ListBoxItem.svelte';
 	import { writable, type Writable } from "svelte/store";
 	import SlideToggle from '@brainandbones/skeleton/components/SlideToggle/SlideToggle.svelte';
+	import CodeBlock from '$lib/utilities/CodeBlock/FixedHeightCodeBlock.svelte';
 
 	const TERMINAL_MAX_ROWS = 10;
 	const GNSS_DEFAULT_BAUDRATE = 19200;
 
 	let alert_decoding_visible = false;
 	let downstream_data = " ";
+	const rx_buffer: List<string> = [];
 	let upstream_data = " ";
+	const tx_buffer: List<string> = [];
+	for (let i = 0; i < TERMINAL_MAX_ROWS; i++) {
+		rx_buffer.push(" \n");
+		tx_buffer.push(" \n");
+	}
 
 	const baudrate: Writable<number> = writable(GNSS_DEFAULT_BAUDRATE);
 	let gnss_command = "";
@@ -22,25 +28,37 @@
 		ethernet_enabled: false
 	};
 
-    const ws = new WebSocket("ws://192.168.0.6:8000/ws");
-	const rx_buffer: List<string> = [];
+	const ws = new WebSocket("ws://192.168.0.6:8000/ws");
 
-    ws.addEventListener("message", function (event) {
-      const json_rx = JSON.parse(event.data);
-	  if (json_rx["gnss_rx_type"] == "string") {
-		  rx_buffer.push(json_rx["gnss_rx"].replace("\r\n", "\n"));
-		  alert_decoding_visible = false;
-	  } else if (json_rx["gnss_rx_type"] == "bytes") {
-		  rx_buffer.push(json_rx["gnss_rx"].slice(2, json_rx["gnss_rx"].length-1) + '\n');
-		  alert_decoding_visible = true;
-	  } else {
-		  rx_buffer.push(json_rx["gnss_rx"]);
-		  alert_decoding_visible = true;
-	  }
-	  if (rx_buffer.length > TERMINAL_MAX_ROWS) {
-		  rx_buffer.shift();
-	  }
-	  downstream_data = rx_buffer.join('');
+	function sendCommand() {
+		tx_buffer.push(gnss_command + '\n');
+		const json_tx = {
+			"gnss_tx": gnss_command + '\r\n'
+		}
+		ws.send(JSON.stringify(json_tx));
+		gnss_command = "";
+		if (tx_buffer.length > TERMINAL_MAX_ROWS) {
+			tx_buffer.shift();
+		}
+		upstream_data = tx_buffer.join('');
+	}
+
+	ws.addEventListener("message", function (event) {
+		const json_rx = JSON.parse(event.data);
+		if (json_rx["gnss_rx_type"] == "string") {
+			rx_buffer.push(json_rx["gnss_rx"].replace("\r\n", "\n"));
+			alert_decoding_visible = false;
+		} else if (json_rx["gnss_rx_type"] == "bytes") {
+			rx_buffer.push(json_rx["gnss_rx"].slice(2, json_rx["gnss_rx"].length-1) + '\n');
+			alert_decoding_visible = true;
+		} else {
+			rx_buffer.push(json_rx["gnss_rx"]);
+			alert_decoding_visible = true;
+		}
+		if (rx_buffer.length > TERMINAL_MAX_ROWS) {
+			rx_buffer.shift();
+		}
+		downstream_data = rx_buffer.join('');
     });
 </script>
 
@@ -75,7 +93,7 @@
 						code="{upstream_data}"
 					/>
 					<label for="gnss_command">
-						<input type="text" id="gnss_command" bind:value={gnss_command} minlength="2" required placeholder="Type command and hit Enter to send.">
+						<input type="text" id="gnss_command" bind:value={gnss_command} on:change={sendCommand} minlength="2" required placeholder="Type command and hit Enter to send.">
 					</label>
 				</div>
 				<div class="card card-body space-y-4">
