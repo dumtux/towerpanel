@@ -4,52 +4,70 @@
 	import ListBox from '@brainandbones/skeleton/components/ListBox/ListBox.svelte';
 	import ListBoxItem from '@brainandbones/skeleton/components/ListBox/ListBoxItem.svelte';
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
+	import { onMount } from 'svelte';
 
 	export let device_name = "test";
-	let rows = 16
-
-	const GNSS_DEFAULT_BAUDRATE = 19200;
-
-	let alert_decoding_visible = false;
-	let console_text = "";
-	const console_buffer: List<string> = [];
-	for (let i = 0; i < rows; i++) {
-		console_buffer.push("_");
-	}
+	export let default_baudrate = 19200;
+	export let default_rows = 16;
 
 	const textEncoder = new TextEncoder();
 	const textDecoder = new TextDecoder();
+	let sendCommand = () => {};
 
-	const baudrate: Writable<number> = writable(GNSS_DEFAULT_BAUDRATE);
+	let rows = default_rows;
+	const baudrate: Writable<number> = writable(default_baudrate);
+	let alert_connection_visible = true;
+	let alert_decoding_visible = false;
+	const console_buffer: List<string> = [];
+	for (let i = 0; i < rows; i++) {
+		console_buffer.push("");
+	}
+	let console_text = console_buffer.join('\n');
+
 	let gnss_command = "";
 
-	const ws = new WebSocket("ws://192.168.0.6:8000/ws/" + device_name);
+	onMount(async () => {
+		const ws = new WebSocket("ws://192.168.0.6:8000/ws/" + device_name);
 
-	function sendCommand() {
-		console_buffer.push('Vega28 ◄◄ ' + gnss_command);
-		ws.send(JSON.stringify(Array.from(textEncoder.encode(gnss_command + '\r\n'))));
-		gnss_command = "";
-		if (console_buffer.length > rows) {
-			console_buffer.shift();
-		}
-		console_text = console_buffer.join('\n');
-	}
+		sendCommand = () => {
+			console_buffer.push('Vega28 ◄◄ ' + gnss_command);
+			ws.send(JSON.stringify(Array.from(textEncoder.encode(gnss_command + '\r\n'))));
+			gnss_command = "";
+			if (console_buffer.length > rows) {
+				console_buffer.shift();
+			}
+			console_text = console_buffer.join('\n');
+		};
 
-	ws.addEventListener("message", function (event) {
-		const received_str = textDecoder.decode(new Uint8Array(JSON.parse(event.data)));
-		console_buffer.push('Vega28 ►► ' + received_str.replace("\r", "\\r").replace("\n", "\\n"));
-		if (console_buffer.length > rows) {
-			console_buffer.shift();
-		}
-		console_buffer[0] = " ";
-		console_text = console_buffer.join('\n');
-    });
+		ws.addEventListener("message", function (event) {
+			const received_str = textDecoder.decode(new Uint8Array(JSON.parse(event.data)));
+			console_buffer.push('Vega28 ►► ' + received_str.replace("\r", "\\r").replace("\n", "\\n"));
+			if (console_buffer.length > rows) {
+				console_buffer.shift();
+			}
+			console_text = console_buffer.join('\n');
+		});
+
+		ws.addEventListener("open", function (event) {
+			alert_connection_visible = false;
+		});
+
+		ws.addEventListener("close", function (event) {
+			alert_connection_visible = true;
+		});
+	});
 </script>
 
 <div class="page-container">
 	<!-- Install -->
 	<section class="space-y-4">
 		<!-- <h1>GNSS</h1> -->
+			<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_connection_visible}>
+				<span>
+					Websocket connection is not established. If you see this message constantly, report on the
+					<a href="https://github.com/dumtux/towerpanel/issues" target="_blank" rel="noreferrer" class="">GitHub Issues</a>.
+				</span>
+			</Alert>
 			<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_decoding_visible}>
 				<span>Failing to decode some bytes. Raw bytes data are shown. Try different baudrate.</span>
 			</Alert>
