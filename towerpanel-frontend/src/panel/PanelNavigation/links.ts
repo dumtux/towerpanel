@@ -6,6 +6,7 @@ export const menuNavLinks: any = [
 		title: 'Sensors',
 		list: [
 			{ href: '/sensors/gnss', label: 'GNSS', icon: 'gps' },
+			{ href: '/sensors/uhf', label: 'UHF Radio', icon: 'lte' },
 			{ href: '/sensors/rs232', label: 'RS232', icon: 'rs232' },
 			{ href: '/sensors/rs485', label: 'RS485', icon: 'canbus' },
 			{ href: '/sensors/can', label: 'CAN', icon: 'canbus' },
