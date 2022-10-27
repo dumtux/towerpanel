@@ -69,10 +69,10 @@
     let alert_syntax_visible = false;
     let alert_schema_visible = false;
     let error_obj = '';
+    let validation_errors = null;
 
 
     const ajv = new Ajv();
-    console.log(schema_of_parsing);
     const validate = ajv.compile(schema_of_parsing);
 
     function _update(d) {
@@ -80,7 +80,7 @@
         const valid = validate(result);
         if (!valid) {
             alert_schema_visible = true;
-            console.log(validate.errors);
+            validation_errors = validate.errors;
         } else {
             alert_schema_visible = false;
             headings = result.headings;
@@ -110,7 +110,11 @@
     </Alert>
     <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_schema_visible}>
         <h2>JS Return Value Invalid</h2>
-        <p>The return value should have a valid form.</p>
+        {#each validation_errors as error}
+            <p>{error.instancePath}</p>
+            <p>{error.keyword}</p>
+            <p>{error.message}</p>
+        {/each}
     </Alert>
     <section class="grid grid-cols-2 gap-4">
         <div class="col-span-1 card card-body space-y-4">
