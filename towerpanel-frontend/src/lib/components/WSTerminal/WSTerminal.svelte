@@ -1,5 +1,6 @@
 <script lang="ts">
 	import JSEditor from '$lib/components/JSEditor/JSEditor.svelte';
+	import { parseData } from '$lib/components/JSEditor/store';
 
 	import { writable, type Writable } from "svelte/store";
 	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
@@ -68,6 +69,7 @@
 				console_buffer.shift();
 			}
 			console_text = console_buffer.join('\n');
+			$parseData(received_str);
 		});
 
 		ws.addEventListener("open", function (event) {
