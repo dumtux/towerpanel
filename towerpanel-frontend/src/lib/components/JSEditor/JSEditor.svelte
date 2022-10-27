@@ -6,10 +6,22 @@
     import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
     import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
     import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+	import { Divider, DataTable } from '@brainandbones/skeleton';
 
     let divEl: HTMLDivElement = null;
     let editor: monaco.editor.IStandaloneCodeEditor;
     let Monaco;
+
+    const DEFAULT_PARSER = `function parse(data) {
+	return {
+        headings: ['Parameter', 'Value', 'Unit / Type'],
+        body: [
+            { parameter: 'Raw Data', value: data, unit: 'str' },
+            { parameter: 'X', value: 1.0, unit: '?' },
+            { parameter: 'Y', value: 1.0, unit: '?' },
+        ]
+    };
+}`;
 
     onMount(async () => {
         // @ts-ignore
@@ -33,15 +45,44 @@
 
         Monaco = await import('monaco-editor');
         editor = Monaco.editor.create(divEl, {
-            value: ['function x() {', '\tconsole.log("Hello world!");', '}'].join('\n'),
+            value: DEFAULT_PARSER,
             language: 'javascript',
-            theme: 'vs-dark'
+            theme: 'vs-dark',
+            automaticLayout: true
         });
 
         return () => {
             editor.dispose();
         };
     });
+
+    let headings: string[] = [];
+    let source: any[] = [];
+    let parser = (data) => [];
+
+    function update(data) {
+        let result = parser(data);
+        headings = result.headings;
+        source = result.body;
+    }
+
+    function onApply() {
+        function looseJsonParse(obj) {
+            return Function(`"use strict";return (${obj})`)();
+        }
+        parser = looseJsonParse(editor.getValue())
+        update("data")
+    }
 </script>
 
-<div bind:this={divEl} class="h-96" />
+<section class="space-y-4">
+    <section class="grid grid-cols-2 gap-4">
+        <div class="col-span-1 card card-body space-y-4">
+            <DataTable {headings} {source}></DataTable>
+        </div>
+        <div class="col-span-1 card card-body space-y-4">
+            <div bind:this={divEl} class="h-96" />
+            <button class="btn bg-primary-500 btn-base text-white" on:click={onApply}>Apply</button>
+        </div>
+    </section>
+</section>

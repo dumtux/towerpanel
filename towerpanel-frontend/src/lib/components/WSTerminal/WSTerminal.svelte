@@ -126,9 +126,7 @@
 	{/if}
 
 	{#if $storeTab === 'parser'}
-		<section class="space-y-4">
-			<JSEditor />
-		</section>
+		<JSEditor />
 	{/if}
 
 	<Divider />
