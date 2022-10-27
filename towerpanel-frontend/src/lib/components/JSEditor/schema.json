@@ -1,26 +1,60 @@
 {
-  "type": "object",
-  "properties": {
-    "headings": {
-      "type": "array",
-      "items": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "string"
-        },
-        {
-          "type": "string"
-        }
-      ]
-    },
-    "body": {
-      "type": "array"
-    }
-  },
-  "required": [
-    "headings",
-    "body"
-  ]
+  "$ref": "#/definitions/Welcome4",
+  "definitions": {
+      "Welcome4": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+              "headings": {
+                  "type": "array",
+                  "items": {
+                      "type": "string"
+                  }
+              },
+              "body": {
+                  "type": "array",
+                  "items": {
+                      "$ref": "#/definitions/Body"
+                  }
+              }
+          },
+          "required": [
+              "body",
+              "headings"
+          ],
+          "title": "Welcome4"
+      },
+      "Body": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+              "parameter": {
+                  "type": "string"
+              },
+              "value": {
+                  "$ref": "#/definitions/Value"
+              },
+              "unit": {
+                  "type": "string"
+              }
+          },
+          "required": [
+              "parameter",
+              "unit",
+              "value"
+          ],
+          "title": "Body"
+      },
+      "Value": {
+          "anyOf": [
+              {
+                  "type": "number"
+              },
+              {
+                  "type": "string"
+              }
+          ],
+          "title": "Value"
+      }
+  }
 }
