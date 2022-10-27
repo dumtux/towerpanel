@@ -79,38 +79,37 @@
 	<!-- Install -->
 	<section class="space-y-4">
 		<!-- <h1>GNSS</h1> -->
-			<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_connection_visible}>
-				<span>
-					Websocket connection is not established. If you see this message constantly, report on the
-					<a href="https://github.com/dumtux/towerpanel/issues" target="_blank" rel="noreferrer" class="">GitHub Issues</a>.
-				</span>
-			</Alert>
-			<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_decoding_visible}>
-				<span>Failing to decode some bytes. Raw bytes data are shown. Try different baudrate.</span>
-			</Alert>
-			<section class="grid grid-cols-5 gap-4">
-			<div class="col-span-4 card card-body space-y-4">
-				<pre><code style="min-height: 28em; white-space: pre; word-break: normal; word-wrap: normal;">{console_text}</code></pre>
-				<label for="gnss_command">
-					<input type="text" id="gnss_command" bind:value={gnss_command} on:change={sendCommand} minlength="2" required placeholder="Type command and hit Enter to send.">
-				</label>
-			</div>
-			<div class="card card-body space-y-4">
-				<label>Baudrate</label>
-				<select name="color" id="color" bind:value={baudrate} on:change={() => {setBaudrate(baudrate)}}>
-					{#each BUADRATE_LIST as value}
-						<option value="{value}">{value} bps</option>
-					{/each}
-				</select>
-				<Divider />
-				<label>Read Timeout</label>
-				<select name="color" id="color" bind:value={timeout} on:change={() => {setReadTimeout(timeout)}}>
-					{#each TIMEOUT_LIST as value}
-						<option value="{value}">{value} s</option>
-					{/each}
-				</select>
-			</div>
-		</section>
+		<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_connection_visible}>
+			<span>
+				Websocket connection is not established. If you see this message constantly, report on the
+				<a href="https://github.com/dumtux/towerpanel/issues" target="_blank" rel="noreferrer" class="">GitHub Issues</a>.
+			</span>
+		</Alert>
+		<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_decoding_visible}>
+			<span>Failing to decode some bytes. Raw bytes data are shown. Try different baudrate.</span>
+		</Alert>
+		<section class="grid grid-cols-5 gap-4">
+		<div class="col-span-4 card card-body space-y-4">
+			<pre><code style="min-height: 28em; white-space: pre; word-break: normal; word-wrap: normal;">{console_text}</code></pre>
+			<label for="gnss_command">
+				<input type="text" id="gnss_command" bind:value={gnss_command} on:change={sendCommand} minlength="2" required placeholder="Type command and hit Enter to send.">
+			</label>
+		</div>
+		<div class="card card-body space-y-4">
+			<label>Baudrate</label>
+			<select name="color" id="color" bind:value={baudrate} on:change={() => {setBaudrate(baudrate)}}>
+				{#each BUADRATE_LIST as value}
+					<option value="{value}">{value} bps</option>
+				{/each}
+			</select>
+			<Divider />
+			<label>Read Timeout</label>
+			<select name="color" id="color" bind:value={timeout} on:change={() => {setReadTimeout(timeout)}}>
+				{#each TIMEOUT_LIST as value}
+					<option value="{value}">{value} s</option>
+				{/each}
+			</select>
+		</div>
 	</section>
 
 	<Divider />
