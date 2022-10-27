@@ -7,15 +7,14 @@
 	import { onMount } from 'svelte';
 
 	export let device_name = "test";
-	export let default_baudrate = 19200;
-	export let default_rows = 16;
+	export let baudrate = 19200;
+	const BUADRATE_LIST = [4800, 9600, 19200, 28400, 57600, 115200];
+	export let rows = 16;
 
 	const textEncoder = new TextEncoder();
 	const textDecoder = new TextDecoder();
 	let sendCommand = () => {};
 
-	let rows = default_rows;
-	const baudrate: Writable<number> = writable(default_baudrate);
 	let alert_connection_visible = true;
 	let alert_decoding_visible = false;
 	const console_buffer: List<string> = [];
@@ -25,6 +24,10 @@
 	let console_text = console_buffer.join('\n');
 
 	let gnss_command = "";
+
+	function setBaudrate (baudrate: number) {
+		console.log(baudrate);
+	}
 
 	onMount(async () => {
 		const ws = new WebSocket("ws://192.168.0.6:8000/ws/" + device_name);
@@ -79,15 +82,12 @@
 				</label>
 			</div>
 			<div class="card card-body space-y-4">
-				<ListBox selected="{baudrate}" label="Baudrate">
-					<ListBoxItem value={4800}>4800 bps</ListBoxItem>
-					<ListBoxItem value={9600}>9600 bps</ListBoxItem>
-					<ListBoxItem value={14400}>14400 bps</ListBoxItem>
-					<ListBoxItem value={19200}>19200 bps</ListBoxItem>
-					<ListBoxItem value={38400}>38400 bps</ListBoxItem>
-					<ListBoxItem value={57600}>57600 bps</ListBoxItem>
-					<ListBoxItem value={115200}>115200 bps</ListBoxItem>
-				</ListBox>
+				<label>Baudrate</label>
+				<select name="color" id="color" bind:value={baudrate} on:change={() => {setBaudrate(baudrate)}}>
+					{#each BUADRATE_LIST as value}
+						<option value="{value}">{value} bps</option>
+					{/each}
+				</select>
 			</div>
 		</section>
 	</section>
