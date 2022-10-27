@@ -1,5 +1,6 @@
 <script lang="ts">
     import type monaco from 'monaco-editor';
+    import Ajv from "ajv";
     import { onMount } from 'svelte';
     import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
     import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
@@ -9,6 +10,7 @@
 	import { Divider, DataTable } from '@brainandbones/skeleton';
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
     import { parseData } from "./store";
+    import schema_of_parsing from './schema.json';
 
     let divEl: HTMLDivElement = null;
     let editor: monaco.editor.IStandaloneCodeEditor;
@@ -65,16 +67,25 @@
         body: []
     }};
     let alert_syntax_visible = false;
-    let alert_return_visible = false;
+    let alert_schema_visible = false;
     let error_obj = '';
+
+
+    const ajv = new Ajv();
+    console.log(schema_of_parsing);
+    const validate = ajv.compile(schema_of_parsing);
 
     function _update(d) {
         let result = parser(d);
-        if (result == null) {
-            return;
+        const valid = validate(result);
+        if (!valid) {
+            alert_schema_visible = true;
+            console.log(validate.errors);
+        } else {
+            alert_schema_visible = false;
+            headings = result.headings;
+            source = result.body;
         }
-        headings = result.headings;
-        source = result.body;
     }
 
     function onApply() {
@@ -97,7 +108,7 @@
         <h2>JS Parsing Error</h2>
         <p>{error_obj}</p>
     </Alert>
-    <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_syntax_visible}>
+    <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_schema_visible}>
         <h2>JS Return Value Invalid</h2>
         <p>The return value should have a valid form.</p>
     </Alert>
