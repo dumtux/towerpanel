@@ -1,4 +1,5 @@
 import asyncio
+from async_timeout import timeout
 import json
 from pprint import pprint
 import serial_asyncio
@@ -61,7 +62,6 @@ async def websocket_gps(websocket: WebSocket, device_name: str):
             tx_str = await websocket.receive_text()
             tx_bytes = bytes(json.loads(tx_str))
             print(f"{device_name} << {tx_str}")
-            print(current_config.baudrate)
             if current_config.baudrate != writer._transport.serial.baudrate:
                 writer._transport.serial.baudrate = current_config.baudrate
             print(writer._transport.serial)
@@ -72,11 +72,15 @@ async def websocket_gps(websocket: WebSocket, device_name: str):
     while True:
         if current_config.baudrate != writer._transport.serial.baudrate:
             writer._transport.serial.baudrate = current_config.baudrate
-        print(current_config.baudrate)
-        rx_bytes = await reader.readuntil(b'\n')
-        rx_str = json.dumps([int(b) for b in rx_bytes])
-        print(f"{device_name} >> {rx_str}")
-        await websocket.send_text(rx_str)
+        try:
+            async with timeout(5) as cm:
+                rx_bytes = await reader.readuntil(b'\n')
+                rx_str = json.dumps([int(b) for b in rx_bytes])
+                print(f"{device_name} >> {rx_str}")
+                await websocket.send_text(rx_str)
+        except asyncio.TimeoutError:
+            rx_bytes = b''
+            print("Timed Out")
 
 
 if __name__=="__main__":

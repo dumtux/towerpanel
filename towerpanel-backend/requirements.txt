@@ -1,3 +1,5 @@
+async-timeout
 fastapi
 pyserial-asyncio
-uvicorn[standard]
+uvicorn
+websockets
