@@ -21,9 +21,10 @@ DEVICES = {
 
 class BusConfig(BaseModel):
     baudrate: int
+    timeout: int
 
 
-current_config = BusConfig(baudrate=9600)
+current_config = BusConfig(baudrate=9600, timeout=4)
 
 app = FastAPI()
 app.add_middleware(
@@ -44,6 +45,7 @@ async def update_item(device_name: str, config: BusConfig):
     if device_name not in DEVICES.keys():
         raise HTTPException(status_code=404, detail=f"`{device_name}` does not exist.")
     current_config.baudrate = config.baudrate
+    current_config.timeout = config.timeout
 
 
 @app.websocket("/ws/{device_name}")
@@ -73,7 +75,7 @@ async def websocket_gps(websocket: WebSocket, device_name: str):
         if current_config.baudrate != writer._transport.serial.baudrate:
             writer._transport.serial.baudrate = current_config.baudrate
         try:
-            async with timeout(5) as cm:
+            async with timeout(current_config.timeout) as cm:
                 rx_bytes = await reader.readuntil(b'\n')
                 rx_str = json.dumps([int(b) for b in rx_bytes])
                 print(f"{device_name} >> {rx_str}")

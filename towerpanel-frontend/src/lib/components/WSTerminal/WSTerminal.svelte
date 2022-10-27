@@ -3,9 +3,12 @@
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 	import { onMount } from 'svelte';
 
-	export let device_name = "test";
-	export let baudrate = 19200;
+	export let device_name: string = "test";
+	export let default_baudrate: string = "19200";
+	let baudrate = parseInt(default_baudrate);
 	const BUADRATE_LIST = [4800, 9600, 19200, 28400, 57600, 115200];
+	export let timeout = 4;
+	const TIMEOUT_LIST = [1, 2, 4, 8, 16];
 	export let rows = 16;
 
 	const textEncoder = new TextEncoder();
@@ -27,7 +30,16 @@
 		fetch('http://192.168.0.6:8000/bus/' + device_name, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ baudrate: baudrate })
+			body: JSON.stringify({ baudrate: baudrate, timeout: timeout })
+		})
+	}
+
+	function setReadTimeout (timeout: number) {
+		console.log(timeout);
+		fetch('http://192.168.0.6:8000/bus/' + device_name, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ baudrate: baudrate, timeout: timeout })
 		})
 	}
 
@@ -88,6 +100,13 @@
 				<select name="color" id="color" bind:value={baudrate} on:change={() => {setBaudrate(baudrate)}}>
 					{#each BUADRATE_LIST as value}
 						<option value="{value}">{value} bps</option>
+					{/each}
+				</select>
+				<Divider />
+				<label>Read Timeout</label>
+				<select name="color" id="color" bind:value={timeout} on:change={() => {setReadTimeout(timeout)}}>
+					{#each TIMEOUT_LIST as value}
+						<option value="{value}">{value} s</option>
 					{/each}
 				</select>
 			</div>

@@ -3,6 +3,7 @@ declare const __propDef: {
     props: {
         [x: string]: any;
         devce_name?: string | undefined;
+        default_baudrate?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;
