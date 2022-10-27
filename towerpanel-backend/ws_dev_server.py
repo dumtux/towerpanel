@@ -3,6 +3,7 @@ import json
 from pprint import pprint
 import serial_asyncio
 from fastapi import FastAPI, WebSocket, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import uvicorn
@@ -24,6 +25,13 @@ class BusConfig(BaseModel):
 current_config = BusConfig(baudrate=9600)
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+
 
 @app.get("/")
 async def home():

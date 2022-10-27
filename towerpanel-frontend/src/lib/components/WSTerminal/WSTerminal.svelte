@@ -1,8 +1,5 @@
 <script lang="ts">
-	import { writable, type Writable } from "svelte/store";
 	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
-	import ListBox from '@brainandbones/skeleton/components/ListBox/ListBox.svelte';
-	import ListBoxItem from '@brainandbones/skeleton/components/ListBox/ListBoxItem.svelte';
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 	import { onMount } from 'svelte';
 
@@ -27,6 +24,11 @@
 
 	function setBaudrate (baudrate: number) {
 		console.log(baudrate);
+		fetch('http://192.168.0.6:8000/bus/' + device_name, {
+			method: 'PUT',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ baudrate: baudrate })
+		})
 	}
 
 	onMount(async () => {
