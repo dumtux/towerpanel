@@ -17,8 +17,7 @@ const config = {
 	},
 	resolve: {
 		alias: {
-			$panel: path.resolve('./src/panel'),
-			$lib: path.resolve('./src/lib')
+			$panel: path.resolve('./src/panel')
 		}
 	},
 	test: {
