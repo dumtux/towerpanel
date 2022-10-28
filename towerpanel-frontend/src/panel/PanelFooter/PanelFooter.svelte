@@ -46,15 +46,15 @@
 		<div class="flex space-x-4">
 			<a class="btn bg-[#7289da] text-white" href="https://linkedin.com/company/towersoftwareltd" target="_blank" rel="noreferrer">
 				<SvgIcon name="linkedin" fill="fill-white" />
-				<span class="hidden md:inline-block ml-2">LinkedIn</span>
+				<span class="hidden md:inline-block ml-2 text-white">LinkedIn</span>
 			</a>
 			<a class="btn bg-[#1da1f2] text-white" href="https://twitter.com/tower_software" target="_blank" rel="noreferrer">
 				<SvgIcon name="twitter" fill="fill-white" />
-				<span class="hidden md:inline-block ml-2">Twitter</span>
+				<span class="hidden md:inline-block ml-2 text-white">Twitter</span>
 			</a>
 			<a class="btn bg-[#6e5494] text-white" href="https://github.com/dumtux/omega2-4g-gateway" target="_blank" rel="noreferrer">
 				<SvgIcon name="github" fill="fill-white" />
-				<span class="hidden md:inline-block ml-2">Github</span>
+				<span class="hidden md:inline-block ml-2 text-white">Github</span>
 			</a>
 		</div>
 	</section>
