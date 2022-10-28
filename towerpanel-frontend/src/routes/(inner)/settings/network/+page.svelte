@@ -23,13 +23,6 @@
 					This page is not implemented yet
 				</span>
 			</Alert>
-			<section class="grid grid-cols-5 gap-4">
-				<div class="col-span-4 card card-body space-y-4">
-                    <h2>Tab 1</h2>
-				</div>
-				<div class="card card-body space-y-4">
-				</div>
-			</section>
 		</section>
 	{/if}
 
@@ -41,13 +34,6 @@
                     This page is not implemented yet
                 </span>
             </Alert>
-            <section class="grid grid-cols-5 gap-4">
-                <div class="col-span-4 card card-body space-y-4">
-                    <h2>Tab 2</h2>
-                </div>
-                <div class="card card-body space-y-4">
-                </div>
-            </section>
         </section>
     {/if}
 
@@ -59,13 +45,6 @@
                     This page is not implemented yet
                 </span>
             </Alert>
-            <section class="grid grid-cols-5 gap-4">
-                <div class="col-span-4 card card-body space-y-4">
-                    <h2>Tab 3</h2>
-                </div>
-                <div class="card card-body space-y-4">
-                </div>
-            </section>
         </section>
     {/if}
 
@@ -77,13 +56,6 @@
                     This page is not implemented yet
                 </span>
             </Alert>
-            <section class="grid grid-cols-5 gap-4">
-                <div class="col-span-4 card card-body space-y-4">
-                    <h2>Tab 4</h2>
-                </div>
-                <div class="card card-body space-y-4">
-                </div>
-            </section>
         </section>
     {/if}
 
