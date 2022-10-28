@@ -5,10 +5,27 @@
 	import SvgIcon from '$lib/components/SvgIcon/SvgIcon.svelte';
     import * as THREE from 'three';
     import NET from 'vanta/dist/vanta.net.min';
+	import { storeLightSwitch } from '@brainandbones/skeleton/utilities/LightSwitch/stores';
+	import { onMount } from 'svelte';
 
-    function vanta(node) {
-        NET({
-            el: node,
+	let bg: NET = null;
+
+	$: $storeLightSwitch, onLightModeChange();
+
+	function onLightModeChange() {
+		if (bg) {
+			bg.destroy();
+		}
+		if ($storeLightSwitch) {
+			bg = initBackground(0x010f18);
+		} else {
+			bg = initBackground(0xf8f8f8);
+		}
+	}
+
+	function initBackground(color: number) {
+		bg = NET({
+            el: "#homepage",
             THREE: THREE,
 			mouseControls: true,
 			touchControls: true,
@@ -18,9 +35,13 @@
 			scale: 1.00,
 			scaleMobile: 1.00,
 			color: 0x7accfe,
-			backgroundColor: 0x010f18
-		})
-    }
+			backgroundColor: color
+		});
+	}
+
+	onMount(async () => {
+		onLightModeChange();
+	});
 
 	let visible: boolean = true;
 	function toggleVisible(): void {
@@ -28,7 +49,8 @@
 	}
 </script>
 
-<div use:vanta>
+<!-- <div use:vanta> -->
+<div id="homepage">
 	<!-- Alert: Beta -->
 	<Alert {visible}>
 		<svelte:fragment slot="lead">🚧</svelte:fragment>
