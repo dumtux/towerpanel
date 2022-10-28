@@ -131,6 +131,4 @@
 		<JSEditor />
 	{/if}
 
-	<Divider />
-
 </div>
