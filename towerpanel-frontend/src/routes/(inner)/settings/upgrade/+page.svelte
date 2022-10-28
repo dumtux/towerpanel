@@ -52,9 +52,9 @@
 
                 {#if files }
                    <Divider />
-
                    <p>{filename}</p>
                    <p>{filesize}</p>
+                   <Divider />
                    <button class="btn bg-primary-500 btn-base text-white" on:click={onUpload} disabled={is_big}>Upload & Upgrade</button>
                    {/if}
             </section>
