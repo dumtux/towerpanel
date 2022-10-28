@@ -21,15 +21,21 @@
 			backgroundColor: 0x010f18
 		})
     }
+
+	let visible: boolean = true;
+	function toggleVisible(): void {
+		visible = !visible;
+	}
 </script>
 
 <div use:vanta>
 	<!-- Alert: Beta -->
-	<Alert>
+	<Alert {visible}>
 		<svelte:fragment slot="lead">🚧</svelte:fragment>
 		<span>TowerPanel is available as a public repository. If you encounter issues please report them on GitHub.</span>
 		<svelte:fragment slot="trail">
 			<a href="https://github.com/dumtux/towerpanel/issues" target="_blank" rel="noreferrer" class="btn btn-ghost">Report Issue</a>
+			<button class="btn-icon btn-ghost-ternary" on:click={toggleVisible}>&#10005;</button>
 		</svelte:fragment>
 	</Alert>
 
