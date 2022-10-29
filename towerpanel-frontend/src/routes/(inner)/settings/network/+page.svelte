@@ -28,7 +28,6 @@
 
 	{#if $storeTab === 'ethernet'}
         <section class="space-y-4">
-            <!-- <h1>GNSS</h1> -->
             <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible=true>
                 <span>
                     This page is not implemented yet
@@ -39,7 +38,6 @@
 
 	{#if $storeTab === 'wifi'}
         <section class="space-y-4">
-            <!-- <h1>GNSS</h1> -->
             <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible=true>
                 <span>
                     This page is not implemented yet
@@ -50,7 +48,6 @@
 
 	{#if $storeTab === 'cellular'}
         <section class="space-y-4">
-            <!-- <h1>GNSS</h1> -->
             <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible=true>
                 <span>
                     This page is not implemented yet
