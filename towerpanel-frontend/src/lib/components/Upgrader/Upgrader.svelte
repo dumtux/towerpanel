@@ -2,14 +2,17 @@
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 	import { Divider, FileDropzone, DataTable } from '@brainandbones/skeleton';
     import { humanFileSize } from '$lib/utilities/misc/filesize';
+
     export let releases_url: string = 'https://api.github.com/repos/[USER]/[REPO]/releases';
-	export let upgrading_target: string = "[TARGET]";
+    export let upgrading_target: string = "[TARGET]";
 
     const max_file_size = "20MB";
     let files: FileList;
-    let filename = '';
-    let filesize = '';
-    let is_big = false;
+    let filename: string = '';
+    let filesize: string | number = '';
+    let is_big: boolean = false;
+    let fetch_error_text: string = '';
+    let is_fetch_error: boolean = false;
 
 	function onChange(e: any): void {
         filename = files[0].name;
@@ -28,9 +31,13 @@
         if (http.ok) {
             const res = await http.json();
             if (res.length == 0) {
-                throw new Error("There is not an official release yet.");
+                fetch_error_text = "There is not an official release yet.";
+                is_fetch_error = true;
+                return;
             }
             const releases = res.map((element) => {
+                fetch_error_text = "";
+                is_fetch_error = false;
                 return {
                     id: element["id"],
                     name: element["name"],
@@ -42,7 +49,8 @@
             tableServer.headings = Object.keys(releases[0]);
             return releases;
         } else {
-            throw new Error("Cannot get repository data: " + http.status);
+            fetch_error_text = "Cannot fetch from remote repository, check internet connection: " + http.status;
+            is_fetch_error = true;
         }
     }
     let tablePromise: Promise<any> = getTableSource();
@@ -55,6 +63,12 @@
 <section class="space-y-4">
     <section class="card card-body space-y-4">
         <h3>Online Resources</h3>
+        <p>Select a version from the official repository to upgrade.</p>
+        <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_fetch_error}>
+            <span>
+                Cannot get repository data: {fetch_error_text}.
+            </span>
+        </Alert>
         {#await tablePromise}
             <p class="text-center">Loading...</p>
         {:then response}
@@ -69,13 +83,14 @@
             <p style="text-center text-warning-500">{error.message}</p>
         {/await}
     </section>
-    <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_big}>
-        <span>
-            File size cannot be bigger than {max_file_size}.
-        </span>
-    </Alert>
     <section class="card card-body space-y-4">
         <h3>Local File</h3>
+        <p>Upload from a local binary or zip file to upgrade.</p>
+        <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_big}>
+            <span>
+                File size cannot be bigger than {max_file_size}.
+            </span>
+        </Alert>
         <FileDropzone bind:files on:change={onChange} notes="Files should not exceed {max_file_size}" />
 
         {#if files }

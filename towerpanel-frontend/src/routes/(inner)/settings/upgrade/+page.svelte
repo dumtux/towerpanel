@@ -14,10 +14,16 @@
 
 	<!-- Conditionally display content -->
 	{#if $storeTab === 'towerwrt'}
-        <Upgrader releases_url="https://api.github.com/repos/dumtux/towerwrt/releases" upgrading_target="towerwrt" />
+        <Upgrader
+			releases_url="https://api.github.com/repos/dumtux/towerwrt/releases"
+			upgrading_target="towerwrt"
+		/>
     {/if}
     {#if $storeTab === 'towerpanel'}
-    <Upgrader releases_url="https://api.github.com/repos/dumtux/towerpanel/releases" upgrading_target="towerpanel" />
+    <Upgrader
+		releases_url="https://api.github.com/repos/dumtux/towerpanel/releases"
+		upgrading_target="towerpanel"
+		/>
     {/if}
 
 </div>
