@@ -72,7 +72,7 @@
 				</p>
 				<nav class="flex space-x-4">
 					<a href="/sensors/gnss" class="btn btn-lg btn-filled-primary"><span class="text-white">Go to Workspace</span></a>
-					<a href="/docs/why" class="btn btn-lg btn-ghost">Why TowerPanel</a>
+					<!-- <a href="/docs/why" class="btn btn-lg btn-ghost">Why TowerPanel</a> -->
 				</nav>
 			</div>
 		</header>
