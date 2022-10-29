@@ -46,6 +46,10 @@
         }
     }
     let tablePromise: Promise<any> = getTableSource();
+
+    function onSelect(e) {
+        console.log(e.detail);
+    }
 </script>
 
 <section class="space-y-4">
@@ -57,6 +61,8 @@
             <DataTable
                 headings={tableServer.headings}
                 source={response}
+                interactive
+                on:selected={onSelect}
             >
             </DataTable>
         {:catch error}
