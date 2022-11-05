@@ -9,6 +9,8 @@
 
 	const storeTab: Writable<string> = writable('console');
 
+	const HOST = '192.168.0.48:8000'
+
 	export let device_name: string = "test";
 	export let default_baudrate: string = "19200";
 	let baudrate = parseInt(default_baudrate);
@@ -33,7 +35,7 @@
 
 	function setBaudrate (baudrate: number) {
 		console.log(baudrate);
-		fetch('http://192.168.0.6:8000/bus/' + device_name, {
+		fetch('http://' + HOST + '/bus/' + device_name, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ baudrate: baudrate, timeout: timeout })
@@ -42,7 +44,7 @@
 
 	function setReadTimeout (timeout: number) {
 		console.log(timeout);
-		fetch('http://192.168.0.6:8000/bus/' + device_name, {
+		fetch('http://' + HOST + '/bus/' + device_name, {
 			method: 'PUT',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ baudrate: baudrate, timeout: timeout })
@@ -50,7 +52,7 @@
 	}
 
 	onMount(async () => {
-		const ws = new WebSocket("ws://192.168.0.6:8000/ws/" + device_name);
+		const ws = new WebSocket("ws://' + HOST + '/ws/" + device_name);
 
 		sendCommand = () => {
 			console_buffer.push('Vega28 ◄◄ ' + gnss_command);
