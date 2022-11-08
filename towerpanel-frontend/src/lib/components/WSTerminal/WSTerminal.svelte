@@ -52,7 +52,7 @@
 	}
 
 	onMount(async () => {
-		const ws = new WebSocket("ws://' + HOST + '/ws/" + device_name);
+		const ws = new WebSocket("ws://" + HOST + "/ws/" + device_name);
 
 		sendCommand = () => {
 			console_buffer.push('Vega28 ◄◄ ' + gnss_command);
