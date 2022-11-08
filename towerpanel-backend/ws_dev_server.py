@@ -82,7 +82,7 @@ async def websocket_gps(websocket: WebSocket, device_name: str):
                 await websocket.send_text(rx_str)
         except asyncio.TimeoutError:
             rx_bytes = b''
-            print("Timed Out")
+            print("Timed Out listening {device_name}")
 
 
 if __name__=="__main__":
