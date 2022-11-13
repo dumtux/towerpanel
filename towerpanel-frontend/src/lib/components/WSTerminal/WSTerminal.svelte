@@ -5,9 +5,10 @@
 	import { writable, type Writable } from "svelte/store";
 	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 
 	const storeTab: Writable<string> = writable('console');
+	let ws: WebSocket = null;
 
 	const HOST = '192.168.0.48:8000'
 
@@ -36,7 +37,7 @@
 	function setBaudrate (baudrate: number) {
 		console.log(baudrate);
 		fetch('http://' + HOST + '/bus/' + device_name, {
-			method: 'PUT',
+			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ baudrate: baudrate, timeout: timeout })
 		})
@@ -45,14 +46,14 @@
 	function setReadTimeout (timeout: number) {
 		console.log(timeout);
 		fetch('http://' + HOST + '/bus/' + device_name, {
-			method: 'PUT',
+			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ baudrate: baudrate, timeout: timeout })
 		})
 	}
 
 	onMount(async () => {
-		const ws = new WebSocket("ws://" + HOST + "/ws/" + device_name);
+		ws = new WebSocket("ws://" + HOST + "/ws/" + device_name);
 
 		sendCommand = () => {
 			console_buffer.push('Vega28 ◄◄ ' + gnss_command);
@@ -81,6 +82,13 @@
 		ws.addEventListener("close", function (event) {
 			alert_connection_visible = true;
 		});
+	});
+
+	onDestroy(async () => {
+		if (ws) {
+			ws.close();
+		}
+		ws = null;
 	});
 </script>
 
