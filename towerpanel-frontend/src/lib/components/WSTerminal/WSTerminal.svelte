@@ -15,7 +15,7 @@
 	export let device_name: string = "test";
 	export let default_baudrate: string = "19200";
 	let baudrate = parseInt(default_baudrate);
-	const BUADRATE_LIST = [4800, 9600, 19200, 28400, 57600, 115200];
+	const BUADRATE_LIST = [4800, 9600, 19200, 38400, 57600, 115200];
 	export let timeout = 4;
 	const TIMEOUT_LIST = [1, 2, 4, 8, 16];
 	export let rows = 16;
