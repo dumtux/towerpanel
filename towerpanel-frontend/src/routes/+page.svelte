@@ -109,7 +109,7 @@
 					<SvgIcon name="python" fill="fill-white" width="w-10" height="h-10" />
 				</div>
 				<h4>Concurrent Python</h4>
-				<p>Everything under thingle-threaded Python, asynchronous non-blocking hardware I/O operations.</p>
+				<p>Everything under single-threaded Python, asynchronous non-blocking hardware I/O operations.</p>
 			</div>
 		</section>
 
