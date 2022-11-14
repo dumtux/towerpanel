@@ -1,8 +1,6 @@
 import asyncio
 import json
-
 from async_timeout import timeout
-from pydantic import BaseModel
 from serial_asyncio import open_serial_connection
 from tornado.ioloop import IOLoop, PeriodicCallback
 from tornado.web import Application
@@ -48,9 +46,11 @@ class WebSocketHandler(_WebSocketHandler):
 # Data Models #
 ###############
 
-class BusConfig(BaseModel):
-    baudrate: int
-    timeout: int
+class BusConfig():
+
+    def __init__(self, baudrate=9600, timeout=4):
+        self.baudrate = baudrate
+        self.timeout = timeout
 
 
 ###################
