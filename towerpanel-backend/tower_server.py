@@ -1,10 +1,27 @@
+import asyncio
 import json
-import random
+
+from async_timeout import timeout
+from pydantic import BaseModel
+from serial_asyncio import open_serial_connection
 from tornado.ioloop import IOLoop, PeriodicCallback
 from tornado.web import Application
 from tornado.web import RequestHandler as _RequestHandler
-from tornado.websocket import WebSocketHandler as _WebSocketHandler
+from tornado.websocket import WebSocketHandler as _WebSocketHandler, WebSocketClosedError
 
+
+DEVICES = {
+    'gps': {'dev': '/dev/ttyS1', 'baud': 115200},
+    'rs232': {'dev': '/dev/ttyUSB1', 'baud': 9600},
+    'rs485': {'dev': '/dev/ttyUSB0', 'baud': 9600},
+    'uhf': {'dev': '/dev/ttyUSB2', 'baud': 9600},
+    'test': {'dev': './ttyWriter', 'baud': 9600},
+}
+
+
+#########################
+# CORS enabled handlers #
+#########################
 
 class RequestHandler(_RequestHandler):
     """ CORS enabled RequestHandler """
@@ -27,41 +44,85 @@ class WebSocketHandler(_WebSocketHandler):
         return True
 
 
+###############
+# Data Models #
+###############
+
+class BusConfig(BaseModel):
+    baudrate: int
+    timeout: int
+
+
+###################
+# Web Application #
+###################
+
+
 class SettingsHandler(RequestHandler):
 
-    def post(self, device: str):
+    def post(self, device_name: str):
         body = json.loads(self.request.body.decode())
         print(body)
+        for client in DeviceSocketHandler.clients:
+            client.current_config.baudrate = body["baudrate"]
+            client.current_config.timeout = body["timeout"]
         self.write({"message": "setting changed successfully."})
 
 
 class DeviceSocketHandler(WebSocketHandler):
     """ WebSocket Handler for I/O forwarding """
 
-    # class variable
     clients = set()
 
-    def open(self, device: str):
-        print(f"Establishing connection to {device} ...")
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.current_config = BusConfig(baudrate=9600, timeout=4)
+        self.port_reader = None
+        self.port_writer = None
+        self.port = None
+
+
+    def open(self, device_name: str):
+        setattr(self, 'is_open', True)
         DeviceSocketHandler.clients.add(self)
 
+        async def read_device():
+            self.port_reader, self.port_writer = await open_serial_connection(
+                url=DEVICES[device_name]['dev'], baudrate=DEVICES[device_name]['baud'])
+            self.port = self.port_writer._transport.serial
+            print(f"Connection to '{device_name}' is established.")
+
+            while self.is_open:
+                if self.current_config.baudrate != self.port.baudrate:
+                    self.port.baudrate = self.current_config.baudrate
+                try:
+                    async with timeout(self.current_config.timeout) as cm:
+                        if self.port_reader == None:
+                            print(f"Port for {device_name} is already closed.")
+                            break
+                        rx_bytes = await self.port_reader.readuntil(b'\n')
+                        rx_str = json.dumps([int(b) for b in rx_bytes])
+                        print(f"{device_name} >> {rx_str}")
+                        try:
+                            await self.write_message(rx_str)
+                        except WebSocketClosedError:
+                            print(f"WebSocket for {device_name} is already closed.")
+                            break
+                except asyncio.TimeoutError:
+                    rx_bytes = b''
+                    print(f"Timed Out while reading {device_name}")
+
+            print(f"WebSocket for '{device_name}' is detached.")
+        IOLoop.current().spawn_callback(read_device)
+
     def on_close(self):
+        setattr(self, 'is_open', True)
         DeviceSocketHandler.clients.remove(self)
+        self.port_reader = None
+        self.port_writer = None
 
-    @classmethod
-    def send_message(cls, message: str):
-        print(f"Sending message {message} to {len(cls.clients)} client(s).")
-        for client in cls.clients:
-            client.write_message(message)
-
-
-class RandomBernoulli:
-    def __init__(self):
-        self.p = 0.72
-        print(f"True p = {self.p}")
-
-    def sample(self):
-        return int(random.uniform(0, 1) <= self.p)
+    def on_message(self, message):
+        print(message)
 
 
 def main():
@@ -76,16 +137,6 @@ def main():
     app.listen(8000, '0.0.0.0')
 
     io_loop = IOLoop.current()
-
-    # Before starting the event loop, instantiate a RandomBernoulli and
-    # register a periodic callback to write a sampled value to the WebSocket
-    # every 100ms.
-    random_bernoulli = RandomBernoulli()
-    periodic_callback = PeriodicCallback(
-        lambda: DeviceSocketHandler.send_message(str(random_bernoulli.sample())), 1000
-    )
-    periodic_callback.start()
-
     io_loop.start()
 
 
