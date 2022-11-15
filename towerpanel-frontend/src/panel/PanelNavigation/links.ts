@@ -9,14 +9,14 @@ export const menuNavLinks: any = [
 			{ href: '/sensors/uhf', label: 'UHF Radio', icon: 'satellite' },
 			{ href: '/sensors/rs232', label: 'RS232', icon: 'rs232' },
 			{ href: '/sensors/rs485', label: 'RS485', icon: 'canbus' },
-			{ href: '/sensors/can', label: 'CAN', icon: 'canbus' },
+			// { href: '/sensors/can', label: 'CAN', icon: 'canbus' },
 		]
 	},
 	{
 		id: 'nav-settings',
 		title: 'Settings',
 		list: [
-			{ href: '/settings/network', label: 'Network', icon: 'lte' },
+			// { href: '/settings/network', label: 'Network', icon: 'lte' },
 			{ href: '/settings/upgrade', label: 'System Upgrade', icon: 'cubes' },
 		]
 	},
