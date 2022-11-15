@@ -2,14 +2,14 @@
 
 export const menuNavLinks: any = [
 	{
-		id: 'nav-sensors',
-		title: 'Sensors',
+		id: 'nav-devices',
+		title: 'devices',
 		list: [
-			{ href: '/sensors/gnss', label: 'GNSS', icon: 'gps' },
-			{ href: '/sensors/uhf', label: 'UHF Radio', icon: 'satellite' },
-			{ href: '/sensors/rs232', label: 'RS232', icon: 'rs232' },
-			{ href: '/sensors/rs485', label: 'RS485', icon: 'canbus' },
-			// { href: '/sensors/can', label: 'CAN', icon: 'canbus' },
+			{ href: '/devices/gnss', label: 'GNSS', icon: 'gps' },
+			{ href: '/devices/uhf', label: 'UHF Radio', icon: 'satellite' },
+			{ href: '/devices/rs232', label: 'RS232', icon: 'rs232' },
+			{ href: '/devices/rs485', label: 'RS485', icon: 'canbus' },
+			// { href: '/devices/can', label: 'CAN', icon: 'canbus' },
 		]
 	},
 	{
