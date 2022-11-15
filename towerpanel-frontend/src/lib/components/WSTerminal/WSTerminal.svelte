@@ -24,7 +24,7 @@
 	const textDecoder = new TextDecoder();
 	let sendCommand = () => {};
 
-	let alert_connection_visible = true;
+	let alert_connection_visible = false;
 	let alert_decoding_visible = false;
 	const console_buffer: List<string> = [];
 	for (let i = 0; i < rows; i++) {
@@ -104,8 +104,7 @@
 			<!-- <h1>GNSS</h1> -->
 			<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_connection_visible}>
 				<span>
-					Websocket connection is not established. If you see this message constantly, report on the
-					<a href="https://github.com/dumtux/towerpanel/issues" target="_blank" rel="noreferrer" class="">GitHub Issues</a>.
+					Websocket connection is not established.
 				</span>
 			</Alert>
 			<Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={alert_decoding_visible}>
