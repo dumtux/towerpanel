@@ -56,7 +56,7 @@
 		ws = new WebSocket("ws://" + HOST + "/ws/" + device_name);
 
 		sendCommand = () => {
-			console_buffer.push('Vega28 ◄◄ ' + gnss_command);
+			console_buffer.push(device_name + ' ◄◄ ' + gnss_command);
 			ws.send(JSON.stringify(Array.from(textEncoder.encode(gnss_command + '\r\n'))));
 			gnss_command = "";
 			if (console_buffer.length > rows) {
@@ -67,7 +67,7 @@
 
 		ws.addEventListener("message", function (event) {
 			const received_str = textDecoder.decode(new Uint8Array(JSON.parse(event.data)));
-			console_buffer.push('Vega28 ►► ' + received_str.replace("\r", "\\r").replace("\n", "\\n"));
+			console_buffer.push(device_name + ' ►► ' + received_str.replace("\r", "\\r").replace("\n", "\\n"));
 			if (console_buffer.length > rows) {
 				console_buffer.shift();
 			}
