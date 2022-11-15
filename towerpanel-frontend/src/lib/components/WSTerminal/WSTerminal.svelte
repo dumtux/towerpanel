@@ -13,7 +13,7 @@
 	const HOST = '192.168.0.48:8000'
 
 	export let device_name: string = "test";
-	export let default_baudrate: string = "19200";
+	export let default_baudrate: string = "9600";
 	let baudrate = parseInt(default_baudrate);
 	const BUADRATE_LIST = [4800, 9600, 19200, 38400, 57600, 115200];
 	export let timeout = 4;

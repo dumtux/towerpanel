@@ -2,4 +2,4 @@
 	import WSTerminal from '$lib/components/WSTerminal/WSTerminal.svelte';
 </script>
 
-<WSTerminal device_name="rs232" default_baudrate="9600" />
+<WSTerminal device_name="rs232" />

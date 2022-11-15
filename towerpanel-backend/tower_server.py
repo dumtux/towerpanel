@@ -9,11 +9,11 @@ from tornado.websocket import WebSocketHandler as _WebSocketHandler, WebSocketCl
 
 
 DEVICES = {
-    'gps': {'dev': '/dev/ttyS1', 'baud': 115200},
-    'rs232': {'dev': '/dev/ttyUSB1', 'baud': 9600},
-    'rs485': {'dev': '/dev/ttyUSB0', 'baud': 9600},
-    'uhf': {'dev': '/dev/ttyUSB2', 'baud': 9600},
-    'test': {'dev': './ttyWriter', 'baud': 9600},
+    'gps': {'dev': '/dev/ttyS1', 'baudrate': 115200, "timeout": 4},
+    'rs232': {'dev': '/dev/ttyUSB1', 'baudrate': 9600, "timeout": 4},
+    'rs485': {'dev': '/dev/ttyUSB0', 'baudrate': 9600, "timeout": 4},
+    'uhf': {'dev': '/dev/ttyUSB2', 'baudrate': 19200, "timeout": 4},
+    'test': {'dev': './ttyWriter', 'baudrate': 9600, "timeout": 4},
 }
 
 
@@ -76,7 +76,7 @@ class DeviceSocketHandler(WebSocketHandler):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.current_config = BusConfig(baudrate=9600, timeout=4)
+        self.current_config = None
         self.port_reader = None
         self.port_writer = None
         self.port = None
@@ -85,10 +85,15 @@ class DeviceSocketHandler(WebSocketHandler):
     def open(self, device_name: str):
         setattr(self, 'is_open', True)
         DeviceSocketHandler.clients.add(self)
+        if self.current_config == None:
+            self.current_config = BusConfig(
+                baudrate=DEVICES[device_name]["baudrate"],
+                timeout=DEVICES[device_name]["timeout"]
+            )
 
         async def read_device():
             self.port_reader, self.port_writer = await open_serial_connection(
-                url=DEVICES[device_name]['dev'], baudrate=DEVICES[device_name]['baud'])
+                url=DEVICES[device_name]['dev'], baudrate=DEVICES[device_name]['baudrate'])
             self.port = self.port_writer._transport.serial
             print(f"Connection to '{device_name}' is established.")
 
