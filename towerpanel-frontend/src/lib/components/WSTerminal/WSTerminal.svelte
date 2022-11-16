@@ -120,14 +120,14 @@
 					<SlideToggle bind:checked={is_monitoring} on:change={onSettingsChange}>{is_monitoring ? 'Active' : 'Paused'}</SlideToggle>
 					<Divider />
 					<label>Baudrate</label>
-					<select name="color" id="color" bind:value={baudrate} on:change={onSettingsChange}>
+					<select name="baudrate" bind:value={baudrate} on:change={onSettingsChange}>
 						{#each BUADRATE_LIST as value}
 							<option value="{value}">{value} bps</option>
 						{/each}
 					</select>
 					<Divider />
 					<label>Read Timeout</label>
-					<select name="color" id="color" bind:value={timeout} on:change={onSettingsChange}>
+					<select name="timeout" bind:value={timeout} on:change={onSettingsChange}>
 						{#each TIMEOUT_LIST as value}
 							<option value="{value}">{value} s</option>
 						{/each}
