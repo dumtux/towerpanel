@@ -1,6 +1,8 @@
 <script lang="ts">
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
-	import { Divider, FileDropzone, DataTable } from '@brainandbones/skeleton';
+	import { Divider, FileDropzone, Table } from '@brainandbones/skeleton';
+    import type { TableSource } from '@brainandbones/skeleton';
+    import { tableMapperValues } from '@brainandbones/skeleton';
     import { humanFileSize } from '$lib/utilities/misc/filesize';
 
     export let releases_url: string = 'https://api.github.com/repos/[USER]/[REPO]/releases';
@@ -14,7 +16,27 @@
     let fetch_error_text: string = '';
     let is_fetch_error: boolean = false;
 
-	function onChange(e: any): void {
+	const sourceData = [
+		{ position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+		{ position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+		{ position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+		{ position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+		{ position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
+		// { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+		// { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+		// { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+		// { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+		// { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' }
+	];
+    const totalWeight = sourceData.reduce((accumulator, obj) => accumulator + obj.weight, 0);
+	const tableSimple: TableSource = {
+		head: ['Symbol', 'Name', 'Weight'],
+		body: tableMapperValues(sourceData, ['symbol', 'name', 'weight']),
+		meta: tableMapperValues(sourceData, ['position', 'name', 'symbol', 'weight']),
+		foot: ['Total', '', `<code>${totalWeight}</code>`]
+	};
+
+    function onChange(e: any): void {
         filename = files[0].name;
         filesize = humanFileSize(files[0].size);
         is_big = files[0].size > 20971520;
@@ -55,7 +77,7 @@
     }
     let tablePromise: Promise<any> = getTableSource();
 
-    function onSelect(e) {
+    function onSelected(e) {
         console.log(e.detail);
     }
 </script>
@@ -72,13 +94,7 @@
         {#await tablePromise}
             <p class="text-center">Loading...</p>
         {:then response}
-            <DataTable
-                headings={tableServer.headings}
-                source={response}
-                interactive
-                on:selected={onSelect}
-            >
-            </DataTable>
+        <Table source={tableSimple} interactive={true} on:selected={onSelected} />
         {:catch error}
             <p style="text-center text-warning-500">{error.message}</p>
         {/await}

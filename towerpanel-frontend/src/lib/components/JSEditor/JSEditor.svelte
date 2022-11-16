@@ -7,7 +7,9 @@
     import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
     import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
     import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
-	import { Divider, DataTable } from '@brainandbones/skeleton';
+    import type { TableSource } from '@brainandbones/skeleton';
+    import { tableMapperValues } from '@brainandbones/skeleton';
+	import { Table } from '@brainandbones/skeleton';
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
     import { parseData } from "./store";
     import schema_of_parsing from './schema.json';
@@ -75,6 +77,20 @@
     const ajv = new Ajv();
     const validate = ajv.compile(schema_of_parsing);
 
+	const sourceData = [
+		{ position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+		{ position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+		{ position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+		{ position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+	];
+    const totalWeight = sourceData.reduce((accumulator, obj) => accumulator + obj.weight, 0);
+    const table_source: TableSource = {
+		head: ['Symbol', 'Name', 'Weight'],
+		body: tableMapperValues(sourceData, ['symbol', 'name', 'weight']),
+		meta: tableMapperValues(sourceData, ['position', 'name', 'symbol', 'weight']),
+		foot: ['Total', '', `<code>${totalWeight}</code>`]
+	};
+
     function _update(d) {
         let result = parser(d);
         const valid = validate(result);
@@ -101,6 +117,10 @@
             error_obj = e;
         }
     }
+
+    function onSelected(e) {
+        console.log(e.detail);
+    }
 </script>
 
 <section class="space-y-4">
@@ -118,7 +138,7 @@
     </Alert>
     <section class="grid grid-cols-2 gap-4">
         <div class="col-span-1 card card-body space-y-4">
-            <DataTable {headings} {source}></DataTable>
+            <Table source={table_source} interactive={true} on:selected={onSelected} />
         </div>
         <div class="col-span-1 card card-body space-y-4">
             <div bind:this={divEl} class="h-96" />

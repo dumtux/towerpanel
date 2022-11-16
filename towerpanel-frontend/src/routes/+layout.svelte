@@ -16,7 +16,6 @@
 
 	// Components & Utilities
 	import AppShell from '@brainandbones/skeleton/components/AppShell/AppShell.svelte';
-	import Dialog from '@brainandbones/skeleton/utilities/Dialog/Dialog.svelte';
 	import Toast from '@brainandbones/skeleton/utilities/Toast/Toast.svelte';
 
 	// Docs Components
@@ -57,7 +56,7 @@
 		// Store current page route URL
 		storeCurrentUrl.set($page.url.pathname);
 		// Scroll to top
-		const isNewPage: boolean = params.from && params.to && params.from.routeId !== params.to.routeId;
+		const isNewPage: boolean = params.from && params.to && params.from.route.id !== params.to.route.id;
 		const elemPage = document.querySelector('#page');
 		if (isNewPage && elemPage !== null) {
 			elemPage.scrollTop = 0;
@@ -74,7 +73,6 @@
 </svelte:head>
 
 <!-- Overlays -->
-<Dialog />
 <Toast />
 <DocsDrawer />
 
