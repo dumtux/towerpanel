@@ -51,6 +51,7 @@ class BusConfig():
     def __init__(self, baudrate=9600, timeout=4):
         self.baudrate = baudrate
         self.timeout = timeout
+        self.monitoring = True
 
 
 ###################
@@ -66,6 +67,7 @@ class SettingsHandler(RequestHandler):
         for client in DeviceSocketHandler.clients:
             client.current_config.baudrate = body["baudrate"]
             client.current_config.timeout = body["timeout"]
+            client.current_config.monitoring = body["monitoring"]
         self.write({"message": "setting changed successfully."})
 
 
@@ -100,6 +102,9 @@ class DeviceSocketHandler(WebSocketHandler):
             while self.is_open:
                 if self.current_config.baudrate != self.port.baudrate:
                     self.port.baudrate = self.current_config.baudrate
+                if self.current_config.monitoring == False:
+                    await asyncio.sleep(0.2)
+                    continue
                 try:
                     async with timeout(self.current_config.timeout) as cm:
                         if self.port_reader == None:
