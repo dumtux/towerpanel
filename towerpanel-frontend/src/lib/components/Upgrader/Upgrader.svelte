@@ -86,7 +86,7 @@
 
 <section class="space-y-4">
     <section class="card">
-        <div class="card-header"><h3>Online Resources</h3></div>
+        <header class="card-header"><h3>Online Resources</h3></header>
         <div class="card-body space-y-4">
             <p>Select a version from the official repository to upgrade.</p>
             <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_fetch_error}>
@@ -104,7 +104,7 @@
         </div>
     </section>
     <section class="card">
-        <div class="card-header"><h3>Online Resources</h3></div>
+        <header class="card-header"><h3>Online Resources</h3></header>
         <div class="card-body space-y-4">
             <p>Upload from a local binary or zip file to upgrade.</p>
             <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_big}>
