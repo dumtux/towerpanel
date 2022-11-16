@@ -8,7 +8,7 @@ export const menuNavLinks: any = [
 			{ href: '/devices/gnss', label: 'GNSS', icon: 'gps' },
 			{ href: '/devices/uhf', label: 'UHF Radio', icon: 'satellite' },
 			{ href: '/devices/rs232', label: 'RS232', icon: 'rs232' },
-			{ href: '/devices/rs485', label: 'RS485', icon: 'canbus' },
+			{ href: '/devices/rs485', label: 'RS485', icon: 'rs232' },
 			// { href: '/devices/can', label: 'CAN', icon: 'canbus' },
 		]
 	},
@@ -20,12 +20,4 @@ export const menuNavLinks: any = [
 			{ href: '/settings/upgrade', label: 'System Upgrade', icon: 'cubes' },
 		]
 	},
-	// {
-	// 	id: 'nav-docs',
-	// 	title: 'docs',
-	// 	list: [
-	// 		{ href: '/docs/why', label: 'Why TowerPanel' },
-	// 		{ href: '/docs/gps', label: 'Precision GNSS' },
-	// 	]
-	// }
 ];
