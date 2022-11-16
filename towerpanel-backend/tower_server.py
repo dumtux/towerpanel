@@ -65,10 +65,13 @@ class SettingsHandler(RequestHandler):
         body = json.loads(self.request.body.decode())
         print(body)
         for client in DeviceSocketHandler.clients:
-            client.current_config.baudrate = body["baudrate"]
-            client.current_config.timeout = body["timeout"]
-            client.current_config.monitoring = body["monitoring"]
-        self.write({"message": "setting changed successfully."})
+            if client.device_name == device_name:
+                client.current_config.baudrate = body["baudrate"]
+                client.current_config.timeout = body["timeout"]
+                client.current_config.monitoring = body["monitoring"]
+                self.write({"message": "setting changed successfully."})
+                return
+        raise Exception(f"Not found device name {device_name}")
 
 
 class DeviceSocketHandler(WebSocketHandler):
@@ -82,10 +85,14 @@ class DeviceSocketHandler(WebSocketHandler):
         self.port_reader = None
         self.port_writer = None
         self.port = None
+        self.device_name = None
 
+    def is_monitoring(self):
+        return self.current_config.monitoring
 
     def open(self, device_name: str):
         setattr(self, 'is_open', True)
+        self.device_name = device_name
         DeviceSocketHandler.clients.add(self)
         if self.current_config == None:
             self.current_config = BusConfig(
@@ -102,7 +109,8 @@ class DeviceSocketHandler(WebSocketHandler):
             while self.is_open:
                 if self.current_config.baudrate != self.port.baudrate:
                     self.port.baudrate = self.current_config.baudrate
-                if self.current_config.monitoring == False:
+
+                if self.is_monitoring() == False:
                     await asyncio.sleep(0.2)
                     continue
                 try:
