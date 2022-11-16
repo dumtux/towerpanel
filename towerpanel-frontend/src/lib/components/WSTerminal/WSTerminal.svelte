@@ -91,7 +91,7 @@
 	});
 </script>
 
-<div class="page-container">
+<div>
 	<TabGroup selected={storeTab}>
 		<Tab value="console">Console</Tab>
 		<Tab value="parser">Parser</Tab>

@@ -2,4 +2,6 @@
 	import WSTerminal from '$lib/components/WSTerminal/WSTerminal.svelte';
 </script>
 
-<WSTerminal device_name="can" />
+<div class="page-container">
+	<WSTerminal device_name="can" />
+</div>
