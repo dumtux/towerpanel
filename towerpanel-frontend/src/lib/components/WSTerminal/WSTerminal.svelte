@@ -3,7 +3,7 @@
 	import { parseData } from '$lib/components/JSEditor/store';
 
 	import { writable, type Writable } from "svelte/store";
-	import { Divider, TabGroup, Tab } from '@brainandbones/skeleton';
+	import { Divider, SlideToggle, TabGroup, Tab } from '@brainandbones/skeleton';
 	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
 	import { onMount, onDestroy } from 'svelte';
 
@@ -34,22 +34,21 @@
 
 	let gnss_command = "";
 
-	function setBaudrate (baudrate: number) {
-		console.log(baudrate);
-		fetch('http://' + HOST + '/bus/' + device_name, {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ baudrate: baudrate, timeout: timeout })
-		})
+	// let is_monitoring: boolean = false;
+	let is_monitoring = (e) => {
+		console.log(e);
+	};
+
+	function onMonitoringChange(event: any) {
+		console.log(is_monitoring);
 	}
 
-	function setReadTimeout (timeout: number) {
-		console.log(timeout);
+	function onSettingsChange(event: any) {
 		fetch('http://' + HOST + '/bus/' + device_name, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ baudrate: baudrate, timeout: timeout })
-		})
+			body: JSON.stringify({ baudrate: baudrate, timeout: timeout, monitoring: is_monitoring })
+		});
 	}
 
 	onMount(async () => {
@@ -117,16 +116,18 @@
 						<input type="text" id="gnss_command" bind:value={gnss_command} on:change={sendCommand} minlength="2" required placeholder="Type command and hit Enter to send.">
 					</label>
 				</div>
-				<div class="card card-body space-y-4">
+				<div class="card card-body space-y-4 min-w-min">
+					<SlideToggle bind:checked={is_monitoring} on:change={onSettingsChange}>{is_monitoring ? 'Active' : 'Paused'}</SlideToggle>
+					<Divider />
 					<label>Baudrate</label>
-					<select name="color" id="color" bind:value={baudrate} on:change={() => {setBaudrate(baudrate)}}>
+					<select name="color" id="color" bind:value={baudrate} on:change={onSettingsChange}>
 						{#each BUADRATE_LIST as value}
 							<option value="{value}">{value} bps</option>
 						{/each}
 					</select>
 					<Divider />
 					<label>Read Timeout</label>
-					<select name="color" id="color" bind:value={timeout} on:change={() => {setReadTimeout(timeout)}}>
+					<select name="color" id="color" bind:value={timeout} on:change={onSettingsChange}>
 						{#each TIMEOUT_LIST as value}
 							<option value="{value}">{value} s</option>
 						{/each}
