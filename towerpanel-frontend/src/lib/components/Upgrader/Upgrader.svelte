@@ -16,25 +16,27 @@
     let fetch_error_text: string = '';
     let is_fetch_error: boolean = false;
 
-	const sourceData = [
-		{ position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-		{ position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-		{ position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-		{ position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-		{ position: 5, name: 'Boron', weight: 10.811, symbol: 'B' }
-		// { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-		// { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-		// { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-		// { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-		// { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' }
-	];
-    const totalWeight = sourceData.reduce((accumulator, obj) => accumulator + obj.weight, 0);
-	const tableSimple: TableSource = {
-		head: ['Symbol', 'Name', 'Weight'],
-		body: tableMapperValues(sourceData, ['symbol', 'name', 'weight']),
-		meta: tableMapperValues(sourceData, ['position', 'name', 'symbol', 'weight']),
-		foot: ['Total', '', `<code>${totalWeight}</code>`]
-	};
+    function responseToTableSource(response: any) {
+        // response from GitHub releases API
+        //     [
+        //         {
+        //             id: "id",
+        //             name: "name",
+        //             tag_name: "tag_name",
+        //             prerelease: "prerelease",
+        //             published_at: "published_at",
+        //         },
+        //     ]
+        if (typeof(response) === 'undefined') {
+            response = [];
+        } 
+        const table_source: TableSource = {
+            head: ['ID', 'Name', 'Tag Name', 'Published At'],
+            body: tableMapperValues(response, ['id', 'name', 'tag_name', 'published_at']),
+            meta: tableMapperValues(response, ['id', 'name', 'tag_name', 'prerelease', 'published_at']),
+        };
+        return table_source;
+    }
 
     function onChange(e: any): void {
         filename = files[0].name;
@@ -88,13 +90,13 @@
         <p>Select a version from the official repository to upgrade.</p>
         <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_fetch_error}>
             <span>
-                Cannot get repository data: {fetch_error_text}.
+                Cannot get repository data: {fetch_error_text}
             </span>
         </Alert>
         {#await tablePromise}
             <p class="text-center">Loading...</p>
         {:then response}
-        <Table source={tableSimple} interactive={true} on:selected={onSelected} />
+            <Table source={responseToTableSource(response)} interactive={true} on:selected={onSelected} />
         {:catch error}
             <p style="text-center text-warning-500">{error.message}</p>
         {/await}
