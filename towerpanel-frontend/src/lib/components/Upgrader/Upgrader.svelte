@@ -85,38 +85,42 @@
 </script>
 
 <section class="space-y-4">
-    <section class="card card-body space-y-4">
-        <h3>Online Resources</h3>
-        <p>Select a version from the official repository to upgrade.</p>
-        <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_fetch_error}>
-            <span>
-                Cannot get repository data: {fetch_error_text}
-            </span>
-        </Alert>
-        {#await tablePromise}
-            <p class="text-center">Loading...</p>
-        {:then response}
-            <Table source={responseToTableSource(response)} interactive={true} on:selected={onSelected} />
-        {:catch error}
-            <p style="text-center text-warning-500">{error.message}</p>
-        {/await}
+    <section class="card">
+        <div class="card-header"><h3>Online Resources</h3></div>
+        <div class="card-body space-y-4">
+            <p>Select a version from the official repository to upgrade.</p>
+            <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_fetch_error}>
+                <span>
+                    Cannot get repository data: {fetch_error_text}
+                </span>
+            </Alert>
+            {#await tablePromise}
+                <p class="text-center">Loading...</p>
+            {:then response}
+                <Table source={responseToTableSource(response)} interactive={true} on:selected={onSelected} />
+            {:catch error}
+                <p style="text-center text-warning-500">{error.message}</p>
+            {/await}
+        </div>
     </section>
-    <section class="card card-body space-y-4">
-        <h3>Local File</h3>
-        <p>Upload from a local binary or zip file to upgrade.</p>
-        <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_big}>
-            <span>
-                File size cannot be bigger than {max_file_size}.
-            </span>
-        </Alert>
-        <FileDropzone bind:files on:change={onChange} notes="Files should not exceed {max_file_size}" />
+    <section class="card">
+        <div class="card-header"><h3>Online Resources</h3></div>
+        <div class="card-body space-y-4">
+            <p>Upload from a local binary or zip file to upgrade.</p>
+            <Alert background="bg-warning-500/30" border="border-l-4 border-warning-500" visible={is_big}>
+                <span>
+                    File size cannot be bigger than {max_file_size}.
+                </span>
+            </Alert>
+            <FileDropzone bind:files on:change={onChange} notes="Files should not exceed {max_file_size}" />
 
-        {#if files }
-            <Divider />
-            <p>{filename}</p>
-            <p>{filesize}</p>
-            <Divider />
-            <button class="btn bg-primary-500 btn-base text-white" on:click={onUpload} disabled={is_big}>Upload & Upgrade</button>
-            {/if}
+            {#if files }
+                <Divider />
+                <p>{filename}</p>
+                <p>{filesize}</p>
+                <Divider />
+                <button class="btn bg-primary-500 btn-base text-white" on:click={onUpload} disabled={is_big}>Upload & Upgrade</button>
+                {/if}
+        </div>
     </section>
 </section>
