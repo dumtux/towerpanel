@@ -1,10 +1,13 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { is_authenticated } from "./store";
-	import Alert from '@brainandbones/skeleton/components/Alert/Alert.svelte';
+	import { Divider, Alert } from '@brainandbones/skeleton';
 
     let Monaco;
     let alert_auth_visible = true;
+
+    let username: string = '';
+    let password: string = '';
 
     function onLogin() {}
 
@@ -21,7 +24,18 @@
     </Alert>
     <section class="flex justify-center">
         <div class="col-span-1 card card-body space-y-4 flex justify-center">
-            <button class="btn bg-primary-500 btn-base text-white" on:click={onLogin}>Login</button>
+            <div class="col-span-4 card card-body space-y-4">
+                <label for="name">
+                    <span>Username</span>
+                    <input type="text" id="username" bind:value={username} minlength="2" required>
+                </label>
+                <label for="name">
+                    <span>Password</span>
+                    <input type="text" id="password" bind:value={password} minlength="2" required>
+                </label>
+                <Divider />
+                <button class="btn bg-primary-500 btn-base text-white" on:click={onLogin}>Login</button>
+            </div>
         </div>
     </section>
 </section>
