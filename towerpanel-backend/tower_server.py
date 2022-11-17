@@ -111,7 +111,7 @@ class DeviceSocketHandler(WebSocketHandler):
                     self.port.baudrate = self.current_config.baudrate
 
                 if self.is_monitoring() == False:
-                    await asyncio.sleep(0.2)
+                    await asyncio.sleep(0.5)
                     continue
                 try:
                     async with timeout(self.current_config.timeout) as cm:
@@ -139,8 +139,14 @@ class DeviceSocketHandler(WebSocketHandler):
         self.port_reader = None
         self.port_writer = None
 
-    def on_message(self, message):
-        print(message)
+    def on_message(self, tx_str: str):
+        print(tx_str)
+        tx_bytes = bytes(json.loads(tx_str))
+        print(tx_bytes)
+        print(f"{self.device_name} << {tx_str}")
+        if self.current_config.baudrate != self.port.baudrate:
+            self.port.baudrate = self.current_config.baudrate
+        self.port_writer.write(tx_bytes)
 
 
 def main():
