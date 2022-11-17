@@ -16,7 +16,7 @@ export const menuNavLinks: any = [
 		id: 'nav-settings',
 		title: 'Settings',
 		list: [
-			// { href: '/settings/network', label: 'Network', icon: 'lte' },
+			{ href: '/settings/network', label: 'Network', icon: 'lte' },
 			{ href: '/settings/upgrade', label: 'System Upgrade', icon: 'cubes' },
 		]
 	},

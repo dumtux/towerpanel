@@ -5,7 +5,7 @@
 
     import { diagRouting, diagRoutingWifiAP } from '$lib/components/NetworkConfig/diag.js';
 
-	const storeTab: Writable<string> = writable('routing');
+	const storeTab: Writable<string> = writable('ethernet');
 
     const uplinkMode: Writable<string> = writable("ethernet");
     const downLinkMode: Writable<string[]> = writable(["sw0", "sw1", "sw2", "sw3"]);
