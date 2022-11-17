@@ -28,73 +28,79 @@
 </script>
 
 <div class="page-container">
-	<section class="card card-body space-y-4">
-		<div class="grid grid-cols-3 gap-4">
-			<div>
-				<label>Module</label>
-				<input type="text" bind:value={module} readonly />
-			</div>
-			<div>
-				<label>SN</label>
-				<input type="text" bind:value={serial_number} readonly />
-			</div>
-			<div>
-				<label>RSSI</label>
-				<input type="text" bind:value={rssi} readonly />
-			</div>
-		</div>
-	</section>
-	<section class="card">
-		<div class="card-body space-y-4">
-			<div class="justify-center items-center">
-				<div class="flex justify-between items-center">
-					<div>RX Frequency</div>
-					<div class="text-xs">{MAX_FREQENcY}</div>
-				</div>
-				<RangeSlider bind:value={rx_frequency} min={MIN_FREQENcY} max={MAX_FREQENcY} step={0.025} ticked></RangeSlider>
-				<p class="text-center"><code>{formatFrequency(rx_frequency)}</code> MHz</p>
-			</div>
-			<div class="justify-center items-center">
-				<div class="flex justify-between items-center">
-					<div>TX Frequency</div>
-					<div class="text-xs">{MAX_FREQENcY}</div>
-				</div>
-				<RangeSlider bind:value={tx_frequency} min={MIN_FREQENcY} max={MAX_FREQENcY} step={0.025} ticked></RangeSlider>
-				<p class="text-center"><code>{formatFrequency(tx_frequency)}</code> MHz</p>
-			</div>
-			<div class="grid grid-cols-3 gap-4">
-				<div>
-					<label>Channel Spacing</label>
-					<select name="channel_spacing" id="channel_spacing" bind:value={channel_spacing} on:change={onSettingsChange}>
-						{#each CHANEL_SPACING_LIST as value}
-							<option value="{value}">{value} kHz</option>
-						{/each}
-					</select>
-				</div>
-				<div>
-					<label>TX Power</label>
-					<select name="tx_power" id="tx_power" bind:value={tx_power} on:change={onSettingsChange}>
-						{#each TX_POWER_LIST as value}
-							<option value="{value}">{value} mW</option>
-						{/each}
-					</select>
-				</div>
-				<div>
-					<label>Protocol</label>
-					<select name="protocol" id="protocol" bind:value={protocol} on:change={onSettingsChange}>
-						{#each PROTOCOL_LIST as value}
-							<option value="{value}">{value}</option>
-						{/each}
-					</select>
+	<div class="grid grid-cols-2 gap-4">
+		<section class="card">
+			<header class="card-header"><h3>Status</h3></header>
+			<div class="card card-body space-y-4">
+				<div class="grid grid-cols-3 gap-4">
+					<div>
+						<label>Module</label>
+						<input type="text" bind:value={module} readonly />
+					</div>
+					<div>
+						<label>SN</label>
+						<input type="text" bind:value={serial_number} readonly />
+					</div>
+					<div>
+						<label>RSSI</label>
+						<input type="text" bind:value={rssi} readonly />
+					</div>
 				</div>
 			</div>
-			<Divider />
-		</div>
-		<footer class="card-footer">
-			<button class="btn bg-primary-500 btn-base text-white">Update</button>
-			<button class="btn bg-primary-500 btn-base text-white" disabled>Save Permanently</button>
-		</footer>
-	</section>
+		</section>
+		<section class="card">
+			<header class="card-header"><h3>Settings</h3></header>
+			<div class="card-body space-y-4">
+				<div class="justify-center items-center">
+					<div class="flex justify-between items-center">
+						<div>RX Frequency</div>
+						<div class="text-xs">{MAX_FREQENcY}</div>
+					</div>
+					<RangeSlider bind:value={rx_frequency} min={MIN_FREQENcY} max={MAX_FREQENcY} step={0.025} ticked></RangeSlider>
+					<p class="text-center"><code>{formatFrequency(rx_frequency)}</code> MHz</p>
+				</div>
+				<div class="justify-center items-center">
+					<div class="flex justify-between items-center">
+						<div>TX Frequency</div>
+						<div class="text-xs">{MAX_FREQENcY}</div>
+					</div>
+					<RangeSlider bind:value={tx_frequency} min={MIN_FREQENcY} max={MAX_FREQENcY} step={0.025} ticked></RangeSlider>
+					<p class="text-center"><code>{formatFrequency(tx_frequency)}</code> MHz</p>
+				</div>
+				<div class="grid grid-cols-3 gap-4">
+					<div>
+						<label>Channel Spacing</label>
+						<select name="channel_spacing" id="channel_spacing" bind:value={channel_spacing} on:change={onSettingsChange}>
+							{#each CHANEL_SPACING_LIST as value}
+								<option value="{value}">{value} kHz</option>
+							{/each}
+						</select>
+					</div>
+					<div>
+						<label>TX Power</label>
+						<select name="tx_power" id="tx_power" bind:value={tx_power} on:change={onSettingsChange}>
+							{#each TX_POWER_LIST as value}
+								<option value="{value}">{value} mW</option>
+							{/each}
+						</select>
+					</div>
+					<div>
+						<label>Protocol</label>
+						<select name="protocol" id="protocol" bind:value={protocol} on:change={onSettingsChange}>
+							{#each PROTOCOL_LIST as value}
+								<option value="{value}">{value}</option>
+							{/each}
+						</select>
+					</div>
+				</div>
+				<Divider />
+			</div>
+			<footer class="card-footer">
+				<button class="btn bg-primary-500 btn-base text-white">Update</button>
+				<button class="btn bg-primary-500 btn-base text-white" disabled>Save Permanently</button>
+			</footer>
+		</section>
+	</div>
 
 	<WSTerminal device_name="uhf" default_baudrate="19200" />
 </div>
