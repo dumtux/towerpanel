@@ -10,7 +10,7 @@
 	const storeTab: Writable<string> = writable('console');
 	let ws: WebSocket = null;
 
-	const HOST = '192.168.0.48:8000'
+	const HOST = '192.168.0.8:8000'
 
 	export let device_name: string = "test";
 	export let default_baudrate: string = "9600";
